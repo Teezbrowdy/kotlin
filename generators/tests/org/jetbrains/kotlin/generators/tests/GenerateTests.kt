@@ -38,6 +38,7 @@ import org.jetbrains.kotlin.kapt3.test.runners.AbstractIrClassFileToSourceStubCo
 import org.jetbrains.kotlin.kapt3.test.runners.AbstractIrKotlinKaptContextTest
 import org.jetbrains.kotlin.kapt3.test.runners.AbstractKotlinKaptContextTest
 import org.jetbrains.kotlin.kapt4.AbstractKotlinKapt4ContextTest
+import org.jetbrains.kotlin.kapt4.AbstractKotlinKapt4IntegrationTest
 import org.jetbrains.kotlin.lombok.*
 import org.jetbrains.kotlin.noarg.*
 import org.jetbrains.kotlin.parcelize.test.runners.*
@@ -396,9 +397,12 @@ fun main(args: Array<String>) {
                 model("converter")
             }
         }
-        testGroup("plugins/kapt4/kapt4-compiler/tests-gen", "plugins/kapt3/kapt3-compiler/testData") {
+        testGroup("plugins/kapt4/kapt4-compiler/tests-gen", "plugins/kapt4/kapt4-compiler/testData") {
             testClass<AbstractKotlinKapt4ContextTest> {
-                model("converter")
+                model("../../../kapt3/kapt3-compiler/testData/converter")
+            }
+            testClass<AbstractKotlinKapt4IntegrationTest> {
+                model("integration", recursive = false, extension = null)
             }
         }
 

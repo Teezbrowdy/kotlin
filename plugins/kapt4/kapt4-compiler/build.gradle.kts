@@ -13,11 +13,27 @@ dependencies {
     api(project(":compiler:frontend.java"))
     api(project(":compiler:plugin-api"))
 
-    api(project(":analysis:analysis-api-standalone"))
-    api(project(":analysis:symbol-light-classes"))
+    embedded(project(":analysis:analysis-api")) { isTransitive = false }
+    embedded(project(":analysis:analysis-api-fir")) { isTransitive = false }
+    embedded(project(":analysis:low-level-api-fir")) { isTransitive = false }
+    embedded(project(":analysis:analysis-api-standalone")) { isTransitive = false }
+    embedded(project(":analysis:analysis-api-standalone:analysis-api-standalone-base")) { isTransitive = false }
+    embedded(project(":analysis:analysis-api-impl-base")) { isTransitive = false }
+    embedded(project(":analysis:analysis-api-providers")) { isTransitive = false }
+    embedded(project(":analysis:project-structure")) { isTransitive = false }
+    embedded(project(":analysis:analysis-internal-utils")) { isTransitive = false }
+    embedded(project(":analysis:symbol-light-classes")) { isTransitive = false }
 
-    compileOnly(project(":kotlin-annotation-processing-base"))
-    compileOnly(project(":kotlin-annotation-processing-runtime"))
+//    embedded(project(":kotlin-annotation-processing-cli")) { isTransitive = false }
+//    embedded(project(":kotlin-annotation-processing-base")) { isTransitive = false }
+//    embedded(project(":kotlin-annotation-processing-runtime")) { isTransitive = false }
+
+    compileOnly(project(":kotlin-annotation-processing"))
+    embedded(project(":kotlin-annotation-processing")){ isTransitive = false }
+
+    embedded(project(":kotlin-annotation-processing-base")){ isTransitive = false }
+    testImplementation(project(":kotlin-annotation-processing-cli"))
+    embedded(project(":kotlin-annotation-processing-runtime")){ isTransitive = false }
     implementation(project(":compiler:backend.jvm.entrypoint"))
 
     compileOnly(toolsJarApi())
@@ -32,6 +48,7 @@ dependencies {
     testApi(projectTests(":compiler:test-infrastructure"))
     testApi(projectTests(":compiler:test-infrastructure-utils"))
     testApi(projectTests(":kotlin-annotation-processing"))
+    testApi(projectTests(":kotlin-annotation-processing-cli"))
 
     testApi(projectTests(":kotlin-annotation-processing-base"))
 
@@ -72,3 +89,15 @@ publish()
 runtimeJar()
 sourcesJar()
 javadocJar()
+
+
+
+allprojects {
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
+        kotlinOptions {
+//            languageVersion = "2.0"
+            freeCompilerArgs += "-Xcontext-receivers"
+
+        }
+    }
+}

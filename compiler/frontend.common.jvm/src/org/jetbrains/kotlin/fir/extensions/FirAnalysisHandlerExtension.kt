@@ -3,12 +3,10 @@
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
-package org.jetbrains.kotlin.cli.jvm.compiler
+package org.jetbrains.kotlin.fir.extensions
 
-import org.jetbrains.kotlin.analysis.api.KtAnalysisSession
-import org.jetbrains.kotlin.asJava.classes.KtLightClass
+import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.extensions.ProjectExtensionDescriptor
-import org.jetbrains.kotlin.psi.KtFile
 import java.io.File
 
 abstract class FirAnalysisHandlerExtension {
@@ -18,8 +16,7 @@ abstract class FirAnalysisHandlerExtension {
     )
 
     abstract fun doAnalysis(
-        ktAnalysisSession: KtAnalysisSession,
-        lightClasses: Map<KtLightClass, KtFile>
+        configuration: CompilerConfiguration
     ): K2AnalysisResult
 }
 

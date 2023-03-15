@@ -16,9 +16,10 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 import kotlin.jvm.optionals.getOrNull
 
-abstract class AbstractKaptToolIntegrationTest {
+abstract class AbstractKaptToolIntegrationTest(isK2: Boolean = false) {
     private lateinit var tmpdir: File
     private lateinit var testInfo: TestInfo
+    private val extraCompilerArgs: List<String> = if (isK2) listOf("-language-version", "2.0", "-Xdisable-kapt-fallback-mode") else listOf()
 
     @BeforeEach
     @OptIn(ExperimentalStdlibApi::class)
@@ -49,8 +50,8 @@ abstract class AbstractKaptToolIntegrationTest {
                 when (section.name) {
                     "mkdir" -> section.args.forEach { File(tmpdir, it).mkdirs() }
                     "copy" -> copyFile(originalTestFile.parentFile, section.args)
-                    "kotlinc" -> runKotlinDistBinary("kotlinc", section.args)
-                    "kapt" -> runKotlinDistBinary("kapt", section.args)
+                    "kotlinc" -> runKotlinDistBinary("kotlinc", extraCompilerArgs + section.args)
+                    "kapt" -> runKotlinDistBinary("kapt", extraCompilerArgs + section.args)
                     "javac" -> runJavac(section.args)
                     "java" -> runJava(section.args)
                     "output" -> {

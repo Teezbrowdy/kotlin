@@ -568,8 +568,11 @@ internal class LLFirSessionCache(private val project: Project) {
 
 internal fun LLFirSessionConfigurator.Companion.configure(session: LLFirSession) {
     val project = session.project
-    for (extension in extensionPointName.getExtensionList(project)) {
-        extension.configure(session)
+    try {
+        for (extension in extensionPointName.getExtensionList(project)) {
+            extension.configure(session)
+        }
+    } catch (ignore: IllegalArgumentException) {
     }
 }
 
