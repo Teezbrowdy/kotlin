@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 description = "Annotation Processor for Kotlin K2"
 
 plugins {
@@ -13,25 +15,15 @@ dependencies {
     api(project(":compiler:frontend.java"))
     api(project(":compiler:plugin-api"))
 
-    embedded(project(":analysis:analysis-api")) { isTransitive = false }
-    embedded(project(":analysis:analysis-api-fir")) { isTransitive = false }
-    embedded(project(":analysis:low-level-api-fir")) { isTransitive = false }
-    embedded(project(":analysis:analysis-api-standalone")) { isTransitive = false }
-    embedded(project(":analysis:analysis-api-standalone:analysis-api-standalone-base")) { isTransitive = false }
-    embedded(project(":analysis:analysis-api-impl-base")) { isTransitive = false }
-    embedded(project(":analysis:analysis-api-providers")) { isTransitive = false }
-    embedded(project(":analysis:project-structure")) { isTransitive = false }
-    embedded(project(":analysis:analysis-internal-utils")) { isTransitive = false }
-    embedded(project(":analysis:symbol-light-classes")) { isTransitive = false }
-
-//    embedded(project(":kotlin-annotation-processing-cli")) { isTransitive = false }
-//    embedded(project(":kotlin-annotation-processing-base")) { isTransitive = false }
-//    embedded(project(":kotlin-annotation-processing-runtime")) { isTransitive = false }
+    embedded(project(":analysis:analysis-api-standalone")) {
+        exclude("org.jetbrains.kotlin", "kotlin-stdlib")
+        exclude("org.jetbrains.kotlin", "kotlin-stdlib-common")
+    }
 
     compileOnly(project(":kotlin-annotation-processing"))
-    embedded(project(":kotlin-annotation-processing")){ isTransitive = false }
+    embedded(project(":kotlin-annotation-processing")) { isTransitive = false }
 
-    embedded(project(":kotlin-annotation-processing-base")){ isTransitive = false }
+    embedded(project(":kotlin-annotation-processing-base")) { isTransitive = false }
     testImplementation(project(":kotlin-annotation-processing-cli"))
     embedded(project(":kotlin-annotation-processing-runtime")){ isTransitive = false }
     implementation(project(":compiler:backend.jvm.entrypoint"))
@@ -91,13 +83,10 @@ sourcesJar()
 javadocJar()
 
 
-
 allprojects {
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
+    tasks.withType(KotlinCompile::class).all {
         kotlinOptions {
-//            languageVersion = "2.0"
             freeCompilerArgs += "-Xcontext-receivers"
-
         }
     }
 }
