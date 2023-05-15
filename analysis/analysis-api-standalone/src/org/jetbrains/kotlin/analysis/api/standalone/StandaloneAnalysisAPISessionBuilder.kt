@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.analysis.api.standalone
 
+import com.intellij.mock.MockProject
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.Application
 import com.intellij.openapi.project.Project
@@ -44,6 +45,7 @@ import kotlin.contracts.contract
 public class StandaloneAnalysisAPISessionBuilder(
     applicationDisposable: Disposable,
     projectDisposable: Disposable,
+    classLoader: ClassLoader = MockProject::class.java.classLoader
 ) {
     init {
         // We depend on swing (indirectly through PSI or something), so we want to declare headless mode,
@@ -58,6 +60,7 @@ public class StandaloneAnalysisAPISessionBuilder(
         StandaloneProjectFactory.createProjectEnvironment(
             projectDisposable,
             applicationDisposable,
+            classLoader = classLoader
         )
 
 
@@ -222,6 +225,7 @@ public inline fun buildStandaloneAnalysisAPISession(
     applicationDisposable: Disposable = Disposer.newDisposable("StandaloneAnalysisAPISession.application"),
     projectDisposable: Disposable = Disposer.newDisposable("StandaloneAnalysisAPISession.project"),
     withPsiDeclarationFromBinaryModuleProvider: Boolean = false,
+    classLoader: ClassLoader = MockProject::class.java.classLoader,
     init: StandaloneAnalysisAPISessionBuilder.() -> Unit
 ): StandaloneAnalysisAPISession {
     contract {
@@ -230,6 +234,7 @@ public inline fun buildStandaloneAnalysisAPISession(
     return StandaloneAnalysisAPISessionBuilder(
         applicationDisposable,
         projectDisposable,
+        classLoader
     ).apply(init).build(
         withPsiDeclarationFromBinaryModuleProvider,
     )

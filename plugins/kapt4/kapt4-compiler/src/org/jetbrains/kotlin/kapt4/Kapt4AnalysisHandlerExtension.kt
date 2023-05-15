@@ -42,7 +42,7 @@ class Kapt4AnalysisHandlerExtension : FirAnalysisHandlerExtension() {
     override fun doAnalysis(configuration: CompilerConfiguration): K2AnalysisResult {
         val module: KtSourceModule
 
-        val analysisSession = buildStandaloneAnalysisAPISession {
+        val analysisSession = buildStandaloneAnalysisAPISession(classLoader = Kapt4AnalysisHandlerExtension::class.java.classLoader) {
             buildKtModuleProviderByCompilerConfiguration(configuration) {
                 module = it
             }
@@ -60,22 +60,23 @@ class Kapt4AnalysisHandlerExtension : FirAnalysisHandlerExtension() {
             ktFiles.mapNotNullTo(this) { ktFile -> ktFile.findFacadeClass()?.let { it to ktFile } }
         }.toMap()
 
+
+        val contentRoots = configuration[CLIConfigurationKeys.CONTENT_ROOTS] ?: emptyList()
+
+        val options = (configuration[KAPT_OPTIONS] ?: KaptOptions.Builder()).apply {
+            projectBaseDir = ktAnalysisSession.useSiteModule.project.basePath?.let(::File)
+            compileClasspath.addAll(contentRoots.filterIsInstance<JvmClasspathRoot>().map { it.file })
+            javaSourceRoots.addAll(contentRoots.filterIsInstance<JavaSourceRoot>().map { it.file })
+            classesOutputDir = classesOutputDir ?: configuration.get(JVMConfigurationKeys.OUTPUT_DIRECTORY)
+        }.build()
+
+        val logger: KaptLogger = MessageCollectorBackedKaptLogger(
+            options.flags[KaptFlag.VERBOSE],
+            options.flags[KaptFlag.INFO_AS_WARNINGS],
+            configuration.get(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY)!!
+        )
+
         try {
-            val contentRoots = configuration[CLIConfigurationKeys.CONTENT_ROOTS] ?: emptyList()
-
-            val options = (configuration[KAPT_OPTIONS] ?: KaptOptions.Builder()).apply {
-                projectBaseDir = ktAnalysisSession.useSiteModule.project.basePath?.let(::File)
-                compileClasspath.addAll(contentRoots.filterIsInstance<JvmClasspathRoot>().map { it.file })
-                javaSourceRoots.addAll(contentRoots.filterIsInstance<JavaSourceRoot>().map { it.file })
-                classesOutputDir = classesOutputDir ?: configuration.get(JVMConfigurationKeys.OUTPUT_DIRECTORY)
-            }.build()
-
-            val logger: KaptLogger = MessageCollectorBackedKaptLogger(
-                options.flags[KaptFlag.VERBOSE],
-                options.flags[KaptFlag.INFO_AS_WARNINGS],
-                configuration.get(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY)!!
-            )
-
             if (options.mode == AptMode.WITH_COMPILATION) {
                 logger.error("KAPT \"compile\" mode is not supported in Kotlin 2.x. Run kapt with -Kapt-mode=stubsAndApt and use kotlinc for the final compilation step.")
                 return K2AnalysisResult.CompilationError
@@ -128,6 +129,7 @@ class Kapt4AnalysisHandlerExtension : FirAnalysisHandlerExtension() {
                 processedSources = generatedSources
             }
         } catch (e: Exception) {
+            logger.exception(e)
             return K2AnalysisResult.InternalError(e)
         }
     }
