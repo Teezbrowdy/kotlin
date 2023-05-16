@@ -20,8 +20,7 @@ import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
 import org.jetbrains.kotlin.cli.jvm.config.JavaSourceRoot
 import org.jetbrains.kotlin.cli.jvm.config.JvmClasspathRoot
 import org.jetbrains.kotlin.compiler.plugin.CompilerPluginRegistrar
-import org.jetbrains.kotlin.config.CompilerConfiguration
-import org.jetbrains.kotlin.config.JVMConfigurationKeys
+import org.jetbrains.kotlin.config.*
 import org.jetbrains.kotlin.fir.extensions.FirAnalysisHandlerExtension
 import org.jetbrains.kotlin.fir.extensions.K2AnalysisResult
 import org.jetbrains.kotlin.kapt3.KAPT_OPTIONS
@@ -40,10 +39,19 @@ class Kapt4AnalysisHandlerExtension : FirAnalysisHandlerExtension() {
 
     @OptIn(KtAnalysisApiInternals::class)
     override fun doAnalysis(configuration: CompilerConfiguration): K2AnalysisResult {
-        val module: KtSourceModule
+        val languageVersionSettings = configuration[CommonConfigurationKeys.LANGUAGE_VERSION_SETTINGS]!!
+        val updatedConfiguration = configuration.copy().apply {
+            put(CommonConfigurationKeys.LANGUAGE_VERSION_SETTINGS, object : LanguageVersionSettings by languageVersionSettings {
+                override fun <T> getFlag(flag: AnalysisFlag<T>): T {
+                    @Suppress("UNCHECKED_CAST")
+                    return if (flag == JvmAnalysisFlags.generatePropertyAnnotationsMethods) (true as T) else languageVersionSettings.getFlag(flag)
+                }
+            })
+        }
 
+        val module: KtSourceModule
         val analysisSession = buildStandaloneAnalysisAPISession(classLoader = Kapt4AnalysisHandlerExtension::class.java.classLoader) {
-            buildKtModuleProviderByCompilerConfiguration(configuration) {
+            buildKtModuleProviderByCompilerConfiguration(updatedConfiguration) {
                 module = it
             }
         }

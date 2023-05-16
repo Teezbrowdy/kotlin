@@ -19,7 +19,7 @@ import org.jetbrains.kotlin.asJava.toLightClass
 import org.jetbrains.kotlin.base.kapt3.KaptOptions
 import org.jetbrains.kotlin.cli.common.config.addKotlinSourceRoots
 import org.jetbrains.kotlin.cli.jvm.config.addJavaSourceRoots
-import org.jetbrains.kotlin.config.CompilerConfiguration
+import org.jetbrains.kotlin.config.*
 import org.jetbrains.kotlin.kapt3.base.util.WriterBackedKaptLogger
 import org.jetbrains.kotlin.kapt3.test.KaptMessageCollectorProvider
 import org.jetbrains.kotlin.kapt3.test.kaptOptionsProvider
