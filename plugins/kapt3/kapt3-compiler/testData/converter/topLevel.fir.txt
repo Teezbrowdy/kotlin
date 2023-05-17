@@ -36,9 +36,9 @@ public final class TopLevelKt {
         return null;
     }
 
-    @Anno(value = "extpr")
     @java.lang.Deprecated()
-    public static void getExtensionProperty$annotations(java.lang.Object p0) {
+    @Anno(value = "extpr")
+    public static <T extends java.lang.Object>void getExtensionProperty$annotations(java.lang.Object p0) {
     }
 
     public static final int getTopLevelProperty() {
