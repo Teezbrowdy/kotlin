@@ -195,13 +195,22 @@ object IrTree : AbstractTreeBuilder() {
         }
         +field("defaultValue", expressionBody, nullable = true, isChild = true)
     }
-    val `class`: ElementConfig by element(Declaration) {
+    val classLikeDeclaration: ElementConfig by element(Declaration) {
         visitorParent = declarationBase
+        ownsChildren = false
 
         parent(declarationBase)
-        parent(possiblyExternalDeclaration)
+        parent(declarationWithName)
         parent(declarationWithVisibility)
         parent(typeParametersContainer)
+
+        +symbol(classLikeSymbolType)
+    }
+    val `class`: ElementConfig by element(Declaration) {
+        visitorParent = classLikeDeclaration
+
+        parent(classLikeDeclaration)
+        parent(possiblyExternalDeclaration)
         parent(declarationContainer)
         parent(attributeContainer)
         parent(metadataSourceOwner)
@@ -501,12 +510,9 @@ object IrTree : AbstractTreeBuilder() {
         +field("correspondingPropertySymbol", propertySymbolType, nullable = true)
     }
     val typeAlias: ElementConfig by element(Declaration) {
-        visitorParent = declarationBase
+        visitorParent = classLikeDeclaration
 
-        parent(declarationBase)
-        parent(declarationWithName)
-        parent(declarationWithVisibility)
-        parent(typeParametersContainer)
+        parent(classLikeDeclaration)
 
         +descriptor("TypeAliasDescriptor")
         +symbol(typeAliasSymbolType)
