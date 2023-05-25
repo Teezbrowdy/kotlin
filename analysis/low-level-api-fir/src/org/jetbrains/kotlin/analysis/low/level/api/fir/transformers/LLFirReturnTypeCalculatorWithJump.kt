@@ -34,18 +34,14 @@ internal class LLFirReturnTypeCalculatorWithJump(
         declaration.lazyResolveToPhase(FirResolvePhase.IMPLICIT_TYPES_BODY_RESOLVE.previous)
 
         val designation = declaration.collectDesignationWithFile().asResolveTarget()
-        val resolver = LLFirImplicitBodyTargetResolver(
+        LLFirImplicitBodyTargetResolver(
             designation,
             lockProvider = lockProvider,
             session = declaration.moduleData.session,
             scopeSession = scopeSession,
             towerDataContextCollector = towerDataContextCollector,
             implicitBodyResolveComputationSession = implicitBodyResolveComputationSession,
-        )
-
-        lockProvider.withGlobalPhaseLock(FirResolvePhase.IMPLICIT_TYPES_BODY_RESOLVE) {
-            resolver.resolveDesignation()
-        }
+        ).resolveDesignation()
 
         LLFirImplicitTypesLazyResolver.checkIsResolved(designation)
         return declaration.returnTypeRef as FirResolvedTypeRef

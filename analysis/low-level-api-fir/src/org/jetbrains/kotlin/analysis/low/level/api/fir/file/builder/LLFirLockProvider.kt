@@ -27,8 +27,6 @@ import kotlin.contracts.contract
 internal class LLFirLockProvider(private val checker: LLFirLazyResolveContractChecker) {
     private val globalLock = ReentrantLock()
 
-    private val implicitTypesLock = ReentrantLock()
-
     inline fun <R> withGlobalLock(
         key: FirFile,
         lockingIntervalMs: Long = DEFAULT_LOCKING_INTERVAL,
@@ -46,22 +44,6 @@ internal class LLFirLockProvider(private val checker: LLFirLazyResolveContractCh
             // Normally, analysis should not be allowed on an invalid session.
             // However, there isn't an easy way to cancel or redo it in general case, as it must then be supported on use-site.
             withRetryFlag(false, action)
-        }
-    }
-
-    fun withGlobalPhaseLock(
-        phase: FirResolvePhase,
-        action: () -> Unit,
-    ) {
-        val lock = when (phase) {
-            FirResolvePhase.IMPLICIT_TYPES_BODY_RESOLVE -> implicitTypesLock
-            else -> null
-        }
-
-        if (lock == null) {
-            action()
-        } else {
-            lock.lockWithPCECheck(DEFAULT_LOCKING_INTERVAL, action)
         }
     }
 
