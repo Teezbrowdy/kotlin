@@ -2,6 +2,7 @@ description = 'Kotlin Standard Library JDK 8 extension'
 
 apply plugin: 'kotlin'
 
+configureSbom(project)
 configurePublishing(project)
 configureSourcesJar()
 configureJavadocJar()
