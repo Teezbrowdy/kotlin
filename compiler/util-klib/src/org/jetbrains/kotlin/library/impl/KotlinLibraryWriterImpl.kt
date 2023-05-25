@@ -62,7 +62,13 @@ class BaseWriterImpl(
             // make sure there are no leftovers from the .def file.
             return
         } else {
-            val newValue = libraries.joinToString(" ") { it.uniqueName }
+            val newValue = libraries.joinToString(separator = " ") {
+                val name = it.uniqueName
+                if (name.contains(" "))
+                    "\"$name\""
+                else
+                    name
+            }
             manifestProperties.setProperty(KLIB_PROPERTY_DEPENDS, newValue)
             libraries.forEach { it ->
                 if (it.versions.libraryVersion != null) {
