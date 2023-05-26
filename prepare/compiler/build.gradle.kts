@@ -255,7 +255,7 @@ publish()
 // sbom for dist
 val distSbomTask = configureSbom(
     target = "Dist",
-    documentName = "kotlin-compiler-zip",
+    documentName = "Kotlin Compiler Distribution",
     setOf(configurations.runtimeClasspath.name, libraries.name, librariesStripVersion.name, compilerPlugins.name)
 )
 
