@@ -560,7 +560,7 @@ sealed class KotlinClassMetadata(val annotationData: Metadata) {
                 val postfix =
                     if (jvmMetadataVersion.isAtMost(1, 0, 0)) "while minimum supported version is 1.1.0 (Kotlin 1.0)."
                     else "while maximum supported version is ${JvmMetadataVersion.INSTANCE_NEXT}. To support newer versions, update kotlinx-metadata library."
-                throw IllegalArgumentException("Provided Metadata instance has version ${jvmMetadataVersion}, $postfix")
+                throw IllegalArgumentException("Provided Metadata instance has version $jvmMetadataVersion, $postfix")
             }
         }
 
