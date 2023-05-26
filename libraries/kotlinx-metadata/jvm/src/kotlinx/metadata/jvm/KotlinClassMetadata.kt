@@ -614,10 +614,10 @@ sealed class KotlinClassMetadata(val annotationData: Metadata) {
 
         /**
          * The latest released metadata version supported by this version of the library.
-         * Library can read Kotlin metadata produced by Kotlin compiler from 1.0 up to and including this version + 1 minor.
+         * The library can read Kotlin metadata produced by Kotlin compilers from 1.0 up to and including this version + 1 minor.
          *
-         * For example, if the latest Kotlin version is 1.7.0, kotlinx-metadata can read binaries produced by Kotlin compilers from 1.0 to 1.8.20.
-         * In this case, this property will have value `[1, 7, 0]`.
+         * For example, if the latest Kotlin version is 1.7.0, kotlinx-metadata-jvm can read binaries produced by Kotlin compilers from 1.0
+         * to 1.8.* inclusively. In this case, this property will have the value `[1, 7, 0]`.
          *
          * @see Metadata.metadataVersion
          */
