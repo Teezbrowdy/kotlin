@@ -222,7 +222,7 @@ class KmClass : KmClassVisitor(), KmDeclarationContainer {
 /**
  * Represents a Kotlin package fragment that contains top-level functions, properties and type aliases.
  * Package fragments are produced from single file facades and multi-file class parts.
- * Note that package fragment does not contain any classes, as classes are not part of file facades and have their own metadata.
+ * Note that a package fragment does not contain any classes, as classes are not a part of file facades and have their own metadata.
  */
 @Suppress("DEPRECATION")
 class KmPackage : KmPackageVisitor(), KmDeclarationContainer {
