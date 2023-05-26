@@ -140,7 +140,7 @@ actual class ArrayList<E> private constructor(
 
     actual fun trimToSize() {
         if (backingList != null) throw IllegalStateException() // just in case somebody casts subList to ArrayList
-        modCount += 1
+        registerModification()
         if (length < backingArray.size)
             backingArray = backingArray.copyOfUninitializedElements(length)
     }
@@ -148,7 +148,7 @@ actual class ArrayList<E> private constructor(
     final actual fun ensureCapacity(minCapacity: Int) {
         if (backingList != null) throw IllegalStateException() // just in case somebody casts subList to ArrayList
         if (minCapacity < 0) throw OutOfMemoryError()    // overflow
-        modCount += 1
+        registerModification()
         if (minCapacity > backingArray.size) {
             val newSize = ArrayDeque.newCapacity(backingArray.size, minCapacity)
             backingArray = backingArray.copyOfUninitializedElements(newSize)
@@ -211,6 +211,10 @@ actual class ArrayList<E> private constructor(
         }
     }
 
+    private fun registerModification() {
+        modCount += 1
+    }
+
     private fun checkIsMutable() {
         if (isReadOnly || root != null && root.isReadOnly) throw UnsupportedOperationException()
     }
@@ -230,7 +234,7 @@ actual class ArrayList<E> private constructor(
     }
 
     private fun addAtInternal(i: Int, element: E) {
-        modCount += 1
+        registerModification()
         if (backingList != null) {
             backingList.addAtInternal(i, element)
             backingArray = backingList.backingArray
@@ -242,7 +246,7 @@ actual class ArrayList<E> private constructor(
     }
 
     private fun addAllInternal(i: Int, elements: Collection<E>, n: Int) {
-        modCount += 1
+        registerModification()
         if (backingList != null) {
             backingList.addAllInternal(i, elements, n)
             backingArray = backingList.backingArray
@@ -259,7 +263,7 @@ actual class ArrayList<E> private constructor(
     }
 
     private fun removeAtInternal(i: Int): E {
-        modCount += 1
+        registerModification()
         if (backingList != null) {
             val old = backingList.removeAtInternal(i)
             length--
@@ -274,7 +278,7 @@ actual class ArrayList<E> private constructor(
     }
 
     private fun removeRangeInternal(rangeOffset: Int, rangeLength: Int) {
-        if (rangeLength > 0) modCount += 1
+        if (rangeLength > 0) registerModification()
         if (backingList != null) {
             backingList.removeRangeInternal(rangeOffset, rangeLength)
         } else {
@@ -303,7 +307,7 @@ actual class ArrayList<E> private constructor(
             backingArray.resetRange(fromIndex = length - removed, toIndex = length)
             removed
         }
-        if (removed > 0) modCount += 1
+        if (removed > 0) registerModification()
         length -= removed
         return removed
     }

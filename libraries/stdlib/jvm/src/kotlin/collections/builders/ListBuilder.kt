@@ -182,11 +182,15 @@ internal class ListBuilder<E> private constructor(
     private fun ensureCapacity(minCapacity: Int) {
         if (backing != null) throw IllegalStateException() // just in case somebody casts subList to ListBuilder
         if (minCapacity < 0) throw OutOfMemoryError()    // overflow
-        modCount += 1
+        registerModification()
         if (minCapacity > array.size) {
             val newSize = ArrayDeque.newCapacity(array.size, minCapacity)
             array = array.copyOfUninitializedElements(newSize)
         }
+    }
+
+    private fun registerModification() {
+        modCount += 1
     }
 
     private fun checkIsMutable() {
@@ -211,7 +215,7 @@ internal class ListBuilder<E> private constructor(
     }
 
     private fun addAtInternal(i: Int, element: E) {
-        modCount += 1
+        registerModification()
         if (backing != null) {
             backing.addAtInternal(i, element)
             array = backing.array
@@ -223,7 +227,7 @@ internal class ListBuilder<E> private constructor(
     }
 
     private fun addAllInternal(i: Int, elements: Collection<E>, n: Int) {
-        modCount += 1
+        registerModification()
         if (backing != null) {
             backing.addAllInternal(i, elements, n)
             array = backing.array
@@ -240,7 +244,7 @@ internal class ListBuilder<E> private constructor(
     }
 
     private fun removeAtInternal(i: Int): E {
-        modCount += 1
+        registerModification()
         if (backing != null) {
             val old = backing.removeAtInternal(i)
             length--
@@ -255,7 +259,7 @@ internal class ListBuilder<E> private constructor(
     }
 
     private fun removeRangeInternal(rangeOffset: Int, rangeLength: Int) {
-        if (rangeLength > 0) modCount += 1
+        if (rangeLength > 0) registerModification()
         if (backing != null) {
             backing.removeRangeInternal(rangeOffset, rangeLength)
         } else {
@@ -284,7 +288,7 @@ internal class ListBuilder<E> private constructor(
             array.resetRange(fromIndex = length - removed, toIndex = length)
             removed
         }
-        if (removed > 0) modCount += 1
+        if (removed > 0) registerModification()
         length -= removed
         return removed
     }

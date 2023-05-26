@@ -125,7 +125,7 @@ actual class HashMap<K, V> private constructor(
         valuesArray?.resetRange(0, length)
         _size = 0
         length = 0
-        modCount += 1
+        registerModification()
     }
 
     override actual val keys: MutableSet<K> get() {
@@ -192,6 +192,10 @@ actual class HashMap<K, V> private constructor(
     private val capacity: Int get() = keysArray.size
     private val hashSize: Int get() = hashArray.size
 
+    private fun registerModification() {
+        modCount += 1
+    }
+
     internal fun checkIsMutable() {
         if (isReadOnly) throw UnsupportedOperationException()
     }
@@ -255,7 +259,7 @@ actual class HashMap<K, V> private constructor(
     }
 
     private fun rehash(newHashSize: Int) {
-        modCount += 1
+        registerModification()
         if (length > _size) compact()
         if (newHashSize != hashSize) {
             hashArray = IntArray(newHashSize)
@@ -327,7 +331,7 @@ actual class HashMap<K, V> private constructor(
                     presenceArray[putIndex] = hash
                     hashArray[hash] = putIndex + 1
                     _size++
-                    modCount += 1
+                    registerModification()
                     if (probeDistance > maxProbeDistance) maxProbeDistance = probeDistance
                     return putIndex
                 }
@@ -356,7 +360,7 @@ actual class HashMap<K, V> private constructor(
         removeHashAt(presenceArray[index])
         presenceArray[index] = TOMBSTONE
         _size--
-        modCount += 1
+        registerModification()
     }
 
     private fun removeHashAt(removedHash: Int) {

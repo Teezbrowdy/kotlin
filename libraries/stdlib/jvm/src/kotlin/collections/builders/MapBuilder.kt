@@ -124,7 +124,7 @@ internal class MapBuilder<K, V> private constructor(
         valuesArray?.resetRange(0, length)
         size = 0
         length = 0
-        modCount += 1
+        registerModification()
     }
 
     override val keys: MutableSet<K> get() {
@@ -189,6 +189,10 @@ internal class MapBuilder<K, V> private constructor(
     internal val capacity: Int get() = keysArray.size
     private val hashSize: Int get() = hashArray.size
 
+    private fun registerModification() {
+        modCount += 1
+    }
+
     internal fun checkIsMutable() {
         if (isReadOnly) throw UnsupportedOperationException()
     }
@@ -251,7 +255,7 @@ internal class MapBuilder<K, V> private constructor(
     }
 
     private fun rehash(newHashSize: Int) {
-        modCount += 1
+        registerModification()
         if (length > size) compact()
         if (newHashSize != hashSize) {
             hashArray = IntArray(newHashSize)
@@ -323,7 +327,7 @@ internal class MapBuilder<K, V> private constructor(
                     presenceArray[putIndex] = hash
                     hashArray[hash] = putIndex + 1
                     size++
-                    modCount += 1
+                    registerModification()
                     if (probeDistance > maxProbeDistance) maxProbeDistance = probeDistance
                     return putIndex
                 }
@@ -352,7 +356,7 @@ internal class MapBuilder<K, V> private constructor(
         removeHashAt(presenceArray[index])
         presenceArray[index] = TOMBSTONE
         size--
-        modCount += 1
+        registerModification()
     }
 
     private fun removeHashAt(removedHash: Int) {
