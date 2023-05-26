@@ -3674,6 +3674,11 @@ public class LazyBodyIsNotTouchedTestGenerated extends AbstractLazyBodyIsNotTouc
             KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/fir/analysis-tests/testData/resolve/scopes"), Pattern.compile("^([^.]+)\\.kt$"), null, true);
         }
 
+        @TestMetadata("delegatedDataClass.kt")
+        public void testDelegatedDataClass() throws Exception {
+            runTest("compiler/fir/analysis-tests/testData/resolve/scopes/delegatedDataClass.kt");
+        }
+
         @TestMetadata("explicitOverrideOfTwoMembers.kt")
         public void testExplicitOverrideOfTwoMembers() throws Exception {
             runTest("compiler/fir/analysis-tests/testData/resolve/scopes/explicitOverrideOfTwoMembers.kt");
