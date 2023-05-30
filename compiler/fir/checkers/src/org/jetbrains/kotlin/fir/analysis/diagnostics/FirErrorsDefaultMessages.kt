@@ -2153,7 +2153,7 @@ object FirErrorsDefaultMessages : BaseDiagnosticRendererFactory() {
         )
         map.put(
             PRIVATE_CLASS_MEMBER_FROM_INLINE,
-            "Non-private inline function cannot access members of private classes: ''{1}''",
+            "Non-private inline function ''{1}'' cannot access members of private classes: ''{0}''",
             SYMBOL,
             SYMBOL
         )

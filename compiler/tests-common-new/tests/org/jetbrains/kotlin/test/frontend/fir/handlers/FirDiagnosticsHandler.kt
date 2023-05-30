@@ -10,8 +10,10 @@ import org.jetbrains.kotlin.*
 import org.jetbrains.kotlin.checkers.diagnostics.factories.DebugInfoDiagnosticFactory0
 import org.jetbrains.kotlin.checkers.diagnostics.factories.DebugInfoDiagnosticFactory1
 import org.jetbrains.kotlin.checkers.utils.TypeOfCall
+import org.jetbrains.kotlin.cli.common.messages.AnalyzerWithCompilerReport
 import org.jetbrains.kotlin.diagnostics.*
 import org.jetbrains.kotlin.diagnostics.rendering.Renderers
+import org.jetbrains.kotlin.diagnostics.rendering.RootDiagnosticRendererFactory
 import org.jetbrains.kotlin.fir.*
 import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors
 import org.jetbrains.kotlin.fir.builder.FirSyntaxErrors
@@ -48,7 +50,10 @@ import org.jetbrains.kotlin.test.model.TestModule
 import org.jetbrains.kotlin.test.runners.lightTreeSyntaxDiagnosticsReporterHolder
 import org.jetbrains.kotlin.test.services.*
 import org.jetbrains.kotlin.test.utils.AbstractTwoAttributesMetaInfoProcessor
+import org.jetbrains.kotlin.test.utils.MultiModuleInfoDumper
+import org.jetbrains.kotlin.test.utils.withExtension
 import org.jetbrains.kotlin.util.OperatorNameConventions
+import org.jetbrains.kotlin.util.capitalizeDecapitalize.toLowerCaseAsciiOnly
 
 @OptIn(SymbolInternals::class)
 class FirDiagnosticsHandler(testServices: TestServices) : FirAnalysisHandler(testServices) {
@@ -63,6 +68,16 @@ class FirDiagnosticsHandler(testServices: TestServices) : FirAnalysisHandler(tes
 
     override val additionalServices: List<ServiceRegistrationData> =
         listOf(service(::DiagnosticsService))
+
+    private val dumper: MultiModuleInfoDumper = MultiModuleInfoDumper(moduleHeaderTemplate = "// -- Module: <%s> --")
+
+    override fun processAfterAllModules(someAssertionWasFailed: Boolean) {
+        if (dumper.isEmpty()) return
+        val resultDump = dumper.generateResultingDump()
+        val testDataFile = testServices.moduleStructure.originalTestDataFiles.first()
+        val expectedFile = testDataFile.withExtension(".diagfir.txt")
+        assertions.assertEqualsToFile(expectedFile, resultDump)
+    }
 
     override fun processModule(module: TestModule, info: FirOutputArtifact) {
         for (part in info.partsForDependsOnModules) {
@@ -92,6 +107,7 @@ class FirDiagnosticsHandler(testServices: TestServices) : FirAnalysisHandler(tes
                 globalMetadataInfoHandler.addMetadataInfosForFile(file, diagnosticsMetadataInfos)
                 collectSyntaxDiagnostics(currentModule, file, firFile, lightTreeEnabled, lightTreeComparingModeEnabled, forceRenderArguments)
                 collectDebugInfoDiagnostics(currentModule, file, firFile, lightTreeEnabled, lightTreeComparingModeEnabled)
+                checkFullDiagnosticRender(module, diagnostics, file)
             }
         }
     }
@@ -323,7 +339,19 @@ class FirDiagnosticsHandler(testServices: TestServices) : FirAnalysisHandler(tes
         else -> null
     }
 
-    override fun processAfterAllModules(someAssertionWasFailed: Boolean) {}
+    private fun checkFullDiagnosticRender(module: TestModule, diagnostics: List<KtDiagnostic>, file: TestFile) {
+        if (DiagnosticsDirectives.RENDER_DIAGNOSTICS_FULL_TEXT !in module.directives) return
+
+        val reportedDiagnostics = diagnostics.map {
+            val severity = AnalyzerWithCompilerReport.convertSeverity(it.severity).toString().toLowerCaseAsciiOnly()
+            val message = RootDiagnosticRendererFactory(it).render(it)
+            "/${file.name}:${it.textRanges.first()}: $severity: $message"
+        }
+
+        if (reportedDiagnostics.isNotEmpty()) {
+            dumper.builderForModule(module).appendLine(reportedDiagnostics.joinToString(separator = "\n\n"))
+        }
+    }
 }
 
 fun List<KtDiagnostic>.diagnosticCodeMetaInfos(
