@@ -31,10 +31,7 @@ actual class StringBuilder private constructor (
 
     // Of CharSequence.
     private var _length: Int = 0
-        set(capacity) {
-            ensureCapacity(capacity)
-            field = capacity
-        }
+
     actual override val length: Int
         get() = _length
 
@@ -373,6 +370,7 @@ actual class StringBuilder private constructor (
         if (newLength > _length) {
             array.fill('\u0000', _length, newLength.coerceAtMost(array.size))
         }
+        ensureCapacity(newLength)
         _length = newLength
     }
 
@@ -437,7 +435,7 @@ actual class StringBuilder private constructor (
 
         val coercedEndIndex = endIndex.coerceAtMost(_length)
         val lengthDiff = value.length - (coercedEndIndex - startIndex)
-        ensureExtraCapacity(_length + lengthDiff)
+        ensureExtraCapacity(lengthDiff)
         array.copyInto(array, startIndex = coercedEndIndex, endIndex = _length, destinationOffset = startIndex + value.length)
         var replaceIndex = startIndex
         for (index in 0 until value.length) array[replaceIndex++] = value[index] // optimize
