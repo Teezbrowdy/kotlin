@@ -554,6 +554,10 @@ sealed class KotlinClassMetadata(val annotationData: Metadata) {
                 annotationData.metadataVersion,
                 (annotationData.extraInt and (1 shl 3)/* see JvmAnnotationNames.METADATA_STRICT_VERSION_SEMANTICS_FLAG */) != 0
             )
+            throwIfNotCompatible(jvmMetadataVersion)
+        }
+
+        internal fun throwIfNotCompatible(jvmMetadataVersion: JvmMetadataVersion) {
             if (!jvmMetadataVersion.isCompatibleWithCurrentCompilerVersion()) {
                 // Kotlin 1.0 produces classfiles with metadataVersion = 1.1.0, while 1.0.0 represents unsupported pre-1.0 Kotlin (see JvmMetadataVersion.kt:39)
                 val postfix =

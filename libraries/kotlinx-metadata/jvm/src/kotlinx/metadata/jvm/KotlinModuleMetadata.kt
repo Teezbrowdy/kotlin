@@ -16,6 +16,7 @@ import kotlinx.metadata.*
 import kotlinx.metadata.internal.accept
 import kotlinx.metadata.jvm.internal.IgnoreInApiDump
 import kotlinx.metadata.jvm.KotlinClassMetadata.Companion.COMPATIBLE_METADATA_VERSION
+import kotlinx.metadata.jvm.KotlinClassMetadata.Companion.throwIfNotCompatible
 import kotlinx.metadata.jvm.internal.wrapIntoMetadataExceptionWhenNeeded
 import kotlinx.metadata.jvm.internal.wrapWriteIntoIAE
 import org.jetbrains.kotlin.metadata.jvm.JvmModuleProtoBuf
@@ -159,12 +160,9 @@ class KotlinModuleMetadata private constructor(
 
         private fun dataFromBytes(bytes: ByteArray): ModuleMapping {
             return ModuleMapping.loadModuleMapping(
-                bytes, "KotlinModuleMetadata",
-                skipMetadataVersionCheck = false,
-                isJvmPackageNameSupported = true
-            ) {
-                throw IllegalArgumentException("Provided metadata has version $it which can't be read by this version of library.")
-            }
+                bytes, "KotlinModuleMetadata", skipMetadataVersionCheck = false,
+                isJvmPackageNameSupported = true, reportIncompatibleVersionError = ::throwIfNotCompatible
+            )
         }
     }
 }
