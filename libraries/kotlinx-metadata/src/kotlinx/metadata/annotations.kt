@@ -36,7 +36,7 @@ class KmAnnotation(val className: ClassName, val arguments: Map<String, KmAnnota
 sealed class KmAnnotationArgument {
     /**
      * A kind of annotation argument, whose value is directly accessible via [value].
-     * This is possible for annotation arguments of primitive types, unsigned types and strings.
+     * This is possible for annotation arguments of primitive types, unsigned types, and strings.
      *
      * For example, in `@Foo("bar")`, argument of `Foo` is a [StringValue] with [value] equal to `bar`.
      *
@@ -48,8 +48,8 @@ sealed class KmAnnotationArgument {
          */
         abstract val value: T
 
-        private val valueName: String =
-            this::class.simpleName ?: throw AssertionError("KmAnnotationArgument.LiteralValue implementation can't be anonymous")
+        // Java reflection instead of Kotlin reflection to avoid (probably small) overhead of mapping Kotlin/Java names
+        private val valueName: String = this::class.java.simpleName
 
         // final modifier prevents generation of data class-like .toString() in inheritors
         final override fun toString(): String = "$valueName(${if (this is StringValue) "\"$value\"" else value.toString()})"
@@ -168,7 +168,7 @@ sealed class KmAnnotationArgument {
      *
      * Due to the nature of JVM, Arrays with different arguments are represented by different `kotlin.reflect.KClass` and `java.lang.Class` instances
      * (while e.g. `List` has always one KClass instance regardless of generic arguments).
-     * As a result, Kotlin compiler allows to use generic arguments for the arrays in annotations: `@Foo(Array<Array<String>>::class)`.
+     * As a result, Kotlin compiler allows using generic arguments for the arrays in annotations: `@Foo(Array<Array<String>>::class)`.
      * [ArrayKClassValue] allows to distinguish such arguments from regular [KClassValue].
      *
      * [className] is the array element type's fully qualified name — in the example above, it is `kotlin/String`.
