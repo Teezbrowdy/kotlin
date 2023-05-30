@@ -32,7 +32,7 @@ import org.jetbrains.kotlin.name.NameUtils
 import org.jetbrains.kotlin.psi
 import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.psi.psiUtil.hasExpectModifier
-import org.jetbrains.kotlin.utils.addToStdlib.lastIsInstanceOrNull
+import org.jetbrains.kotlin.utils.addToStdlib.popLastOrNull
 
 internal class RawFirNonLocalDeclarationBuilder private constructor(
     session: FirSession,
@@ -222,8 +222,9 @@ internal class RawFirNonLocalDeclarationBuilder private constructor(
                 withPsiEntry("constructor", constructor, baseSession.llFirModuleData.ktModule)
             }
             val selfType = classOrObject.toDelegatedSelfType(typeParameters, containingClass.symbol)
-            val superTypeCallEntry = classOrObject.superTypeListEntries.lastIsInstanceOrNull<KtSuperTypeCallEntry>()
-            return ConstructorConversionParams(superTypeCallEntry, selfType, typeParameters)
+            val excessiveSuperTypeCallEntries = classOrObject.superTypeListEntries.filterIsInstance<KtSuperTypeCallEntry>().toMutableList()
+            val superTypeCallEntry = excessiveSuperTypeCallEntries.popLastOrNull()
+            return ConstructorConversionParams(superTypeCallEntry, selfType, typeParameters, excessiveSuperTypeCallEntries)
         }
 
         override fun visitSecondaryConstructor(constructor: KtSecondaryConstructor, data: Unit?): FirElement {
@@ -251,11 +252,22 @@ internal class RawFirNonLocalDeclarationBuilder private constructor(
                 params.selfType,
                 classOrObject,
                 params.typeParameters,
+                params.excessiveSuperTypeCallEntries.zip(firConstructor.excessiveDelegatedConstructors).map { (entry, call) ->
+                    entry to call.constructedTypeRef
+                },
                 firConstructor.delegatedConstructor == null,
                 copyConstructedTypeRefWithImplicitSource = false,
             )
             if (calleeReference != null) {
                 (newConstructor.delegatedConstructor?.calleeReference as? FirSuperReference)?.replaceSuperTypeRef(calleeReference.superTypeRef)
+            }
+            for ((oldExcessiveDelegate, newExcessiveDelegate) in firConstructor.excessiveDelegatedConstructors
+                    .zip(newConstructor.excessiveDelegatedConstructors)) {
+                val calleeReferenceForExessiveDelegate = oldExcessiveDelegate.calleeReference
+                if (calleeReferenceForExessiveDelegate is FirSuperReference) {
+                    (newExcessiveDelegate.calleeReference as? FirSuperReference)
+                        ?.replaceSuperTypeRef(calleeReferenceForExessiveDelegate.superTypeRef)
+                }
             }
             return newConstructor
         }
@@ -351,6 +363,7 @@ internal class RawFirNonLocalDeclarationBuilder private constructor(
         val superTypeCallEntry: KtSuperTypeCallEntry?,
         val selfType: FirTypeRef,
         val typeParameters: List<FirTypeParameterRef>,
+        val excessiveSuperTypeCallEntries: List<KtSuperTypeCallEntry>,
     )
 }
 

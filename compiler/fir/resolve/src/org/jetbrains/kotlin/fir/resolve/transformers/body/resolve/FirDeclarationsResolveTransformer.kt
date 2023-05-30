@@ -690,6 +690,7 @@ open class FirDeclarationsResolveTransformer(
                 constructor.transformValueParameters(transformer, data)
             }
             constructor.transformDelegatedConstructor(transformer, data)
+            constructor.transformExcessiveDelegatedConstructors(transformer, data)
             context.forConstructorBody(constructor, session) {
                 constructor.transformBody(transformer, data)
             }

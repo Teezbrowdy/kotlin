@@ -407,6 +407,7 @@ object NodeConfigurator : AbstractFieldConfigurator<FirTreeBuilder>(FirTreeBuild
             +annotations
             +symbol("FirConstructorSymbol")
             +field("delegatedConstructor", delegatedConstructorCall, nullable = true, withReplace = true).withTransform()
+            +fieldList("excessiveDelegatedConstructors", delegatedConstructorCall, withReplace = true).withTransform()
             +body(nullable = true)
             +booleanField("isPrimary")
         }

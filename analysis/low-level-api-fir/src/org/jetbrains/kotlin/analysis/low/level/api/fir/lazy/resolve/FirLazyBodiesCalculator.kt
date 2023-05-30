@@ -110,6 +110,7 @@ private fun calculateLazyBodyForConstructor(designation: FirDesignation) {
         replaceContractDescription(newConstructor.contractDescription)
         replaceDelegatedConstructor(newConstructor.delegatedConstructor)
         replaceValueParameterDefaultValues(valueParameters, newConstructor.valueParameters)
+        replaceExcessiveDelegatedConstructors(newConstructor.excessiveDelegatedConstructors)
     }
 }
 

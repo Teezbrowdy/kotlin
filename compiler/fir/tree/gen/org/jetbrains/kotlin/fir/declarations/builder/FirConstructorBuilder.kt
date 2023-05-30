@@ -67,6 +67,7 @@ open class FirConstructorBuilder : FirAbstractConstructorBuilder, FirAnnotationC
     override val annotations: MutableList<FirAnnotation> = mutableListOf()
     override lateinit var symbol: FirConstructorSymbol
     override var delegatedConstructor: FirDelegatedConstructorCall? = null
+    override val excessiveDelegatedConstructors: MutableList<FirDelegatedConstructorCall> = mutableListOf()
     override var body: FirBlock? = null
 
     override fun build(): FirConstructor {
@@ -89,6 +90,7 @@ open class FirConstructorBuilder : FirAbstractConstructorBuilder, FirAnnotationC
             annotations.toMutableOrEmpty(),
             symbol,
             delegatedConstructor,
+            excessiveDelegatedConstructors,
             body,
         )
     }
@@ -134,6 +136,7 @@ inline fun buildConstructorCopy(original: FirConstructor, init: FirConstructorBu
     copyBuilder.annotations.addAll(original.annotations)
     copyBuilder.symbol = original.symbol
     copyBuilder.delegatedConstructor = original.delegatedConstructor
+    copyBuilder.excessiveDelegatedConstructors.addAll(original.excessiveDelegatedConstructors)
     copyBuilder.body = original.body
     return copyBuilder.apply(init).build()
 }

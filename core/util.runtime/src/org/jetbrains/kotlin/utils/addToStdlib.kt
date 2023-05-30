@@ -305,6 +305,7 @@ inline fun <T, K> List<T>.flatAssociateBy(selector: (T) -> Collection<K>): Map<K
 }
 
 fun <E> MutableList<E>.popLast(): E = removeAt(lastIndex)
+fun <E> MutableList<E>.popLastOrNull(): E? = if (isEmpty()) null else popLast()
 
 fun <K : Enum<K>, V> enumMapOf(vararg pairs: Pair<K, V>): EnumMap<K, V> = EnumMap(mapOf(*pairs))
 fun <T : Enum<T>> enumSetOf(element: T, vararg elements: T): EnumSet<T> = EnumSet.of(element, *elements)

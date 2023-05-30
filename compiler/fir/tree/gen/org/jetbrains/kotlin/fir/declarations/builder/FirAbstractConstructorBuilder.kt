@@ -59,5 +59,7 @@ interface FirAbstractConstructorBuilder : FirFunctionBuilder {
     abstract var contractDescription: FirContractDescription
     abstract var symbol: FirConstructorSymbol
     abstract var delegatedConstructor: FirDelegatedConstructorCall?
+    abstract val excessiveDelegatedConstructors: MutableList<FirDelegatedConstructorCall>
+
     override fun build(): FirConstructor
 }

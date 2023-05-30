@@ -67,6 +67,7 @@ class FirPrimaryConstructorBuilder : FirAbstractConstructorBuilder, FirAnnotatio
     override val annotations: MutableList<FirAnnotation> = mutableListOf()
     override lateinit var symbol: FirConstructorSymbol
     override var delegatedConstructor: FirDelegatedConstructorCall? = null
+    override val excessiveDelegatedConstructors: MutableList<FirDelegatedConstructorCall> = mutableListOf()
     override var body: FirBlock? = null
 
     @OptIn(FirImplementationDetail::class)
@@ -90,6 +91,7 @@ class FirPrimaryConstructorBuilder : FirAbstractConstructorBuilder, FirAnnotatio
             annotations.toMutableOrEmpty(),
             symbol,
             delegatedConstructor,
+            excessiveDelegatedConstructors,
             body,
         )
     }

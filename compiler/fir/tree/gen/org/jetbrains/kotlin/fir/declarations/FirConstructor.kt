@@ -44,6 +44,7 @@ abstract class FirConstructor : FirFunction(), FirTypeParameterRefsOwner, FirCon
     abstract override val annotations: List<FirAnnotation>
     abstract override val symbol: FirConstructorSymbol
     abstract val delegatedConstructor: FirDelegatedConstructorCall?
+    abstract val excessiveDelegatedConstructors: List<FirDelegatedConstructorCall>
     abstract override val body: FirBlock?
     abstract val isPrimary: Boolean
 
@@ -73,6 +74,8 @@ abstract class FirConstructor : FirFunction(), FirTypeParameterRefsOwner, FirCon
 
     abstract fun replaceDelegatedConstructor(newDelegatedConstructor: FirDelegatedConstructorCall?)
 
+    abstract fun replaceExcessiveDelegatedConstructors(newExcessiveDelegatedConstructors: List<FirDelegatedConstructorCall>)
+
     abstract override fun replaceBody(newBody: FirBlock?)
 
     abstract override fun <D> transformTypeParameters(transformer: FirTransformer<D>, data: D): FirConstructor
@@ -90,6 +93,8 @@ abstract class FirConstructor : FirFunction(), FirTypeParameterRefsOwner, FirCon
     abstract override fun <D> transformAnnotations(transformer: FirTransformer<D>, data: D): FirConstructor
 
     abstract fun <D> transformDelegatedConstructor(transformer: FirTransformer<D>, data: D): FirConstructor
+
+    abstract fun <D> transformExcessiveDelegatedConstructors(transformer: FirTransformer<D>, data: D): FirConstructor
 
     abstract override fun <D> transformBody(transformer: FirTransformer<D>, data: D): FirConstructor
 }
