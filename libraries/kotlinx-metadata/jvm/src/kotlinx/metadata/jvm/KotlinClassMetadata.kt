@@ -523,11 +523,10 @@ sealed class KotlinClassMetadata(val annotationData: Metadata) {
          * [annotationData] may be obtained reflectively, constructed manually or with helper [kotlinx.metadata.jvm.Metadata] function,
          * or equivalent [KotlinClassHeader] can be used.
          *
-         * Metadata version is supported if it is:
-         * 1. Written by the stable (1.0 or higher) Kotlin compiler. Due to technical reasons, value of Kotlin 1.0 `metadataVersion` is 1.1.0.
-         * 2. Written by Kotlin compiler which version is not newer than the latest released + 1 minor version.
-         * For example, if the latest Kotlin version is 1.7.0, latest kotlinx-metadata can read binaries produced by Kotlin compilers from 1.0 to 1.8.20.
-         * To get latest released version (with which this kotlinx-metadata library was compiled), one can use [COMPATIBLE_METADATA_VERSION] constant.
+         * Metadata version is supported if it is greater or equal than 1.1, and less or equal than [COMPATIBLE_METADATA_VERSION] + 1 minor version.
+         * Note that metadata version is 1.1 for Kotlin < 1.4, and is equal to the language version starting from Kotlin 1.4.
+         * For example, if the latest Kotlin version is 1.7.0, the latest kotlinx-metadata-jvm can read binaries produced by Kotlin
+         * compilers from 1.0 to 1.8.* inclusively.
          *
          * @throws IllegalArgumentException if the metadata version is unsupported, or metadata is malformed and cannot be parsed from binary format, or metadata is inconsistent with itself.
          *
@@ -558,8 +557,8 @@ sealed class KotlinClassMetadata(val annotationData: Metadata) {
             if (!jvmMetadataVersion.isCompatibleWithCurrentCompilerVersion()) {
                 // Kotlin 1.0 produces classfiles with metadataVersion = 1.1.0, while 1.0.0 represents unsupported pre-1.0 Kotlin (see JvmMetadataVersion.kt:39)
                 val postfix =
-                    if (jvmMetadataVersion.isAtMost(1, 0, 0)) "while minimum supported version is 1.1.0 (Kotlin 1.0)."
-                    else "while maximum supported version is ${JvmMetadataVersion.INSTANCE_NEXT}. To support newer versions, update kotlinx-metadata library."
+                    if (!jvmMetadataVersion.isAtLeast(1, 1, 0)) "while minimum supported version is 1.1.0 (Kotlin 1.0)."
+                    else "while maximum supported version is ${JvmMetadataVersion.INSTANCE_NEXT}. To support newer versions, update the kotlinx-metadata-jvm library."
                 throw IllegalArgumentException("Provided Metadata instance has version $jvmMetadataVersion, $postfix")
             }
         }

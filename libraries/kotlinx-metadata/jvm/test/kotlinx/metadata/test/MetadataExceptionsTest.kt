@@ -37,13 +37,14 @@ class MetadataExceptionsTest {
     private fun doTestVersion(version: IntArray, expectedText: String) {
         val md = Metadata(metadataVersion = version)
         val iae = assertFailsWith<IllegalArgumentException> { KotlinClassMetadata.read(md) }
-        assertTrue("exception text") { iae.message.orEmpty().contains(expectedText) }
+        assertContains(iae.message.orEmpty(), expectedText)
     }
 
     @Test
     fun testReadObsoleteVersion() {
         doTestVersion(intArrayOf(0, 1, 0), "version 0.1.0, while minimum supported version is 1.1.0")
         doTestVersion(intArrayOf(1, 0, 0), "version 1.0.0, while minimum supported version is 1.1.0")
+        doTestVersion(intArrayOf(1, 0, 255), "version 1.0.255, while minimum supported version is 1.1.0")
     }
 
     @Test
