@@ -12,6 +12,7 @@ import org.jetbrains.kotlin.config.JvmTarget
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.findAnnotation
+import kotlin.reflect.jvm.javaField
 
 val defaultSubstitutors: Map<KClass<out CommonToolArguments>, Collection<ExplicitDefaultSubstitutor>> =
     mapOf(K2JVMCompilerArguments::class to listOf(JvmTargetDefaultSubstitutor))
@@ -23,7 +24,8 @@ sealed class ExplicitDefaultSubstitutor {
     abstract fun isSubstitutable(args: List<String>): Boolean
 
     protected val argument: Argument by lazy {
-        substitutedProperty.findAnnotation() ?: error("Property \"${substitutedProperty.name}\" has no Argument annotation")
+        substitutedProperty.javaField?.getAnnotation(Argument::class.java)
+            ?: error("Property \"${substitutedProperty.name}\" has no Argument annotation")
     }
 }
 
