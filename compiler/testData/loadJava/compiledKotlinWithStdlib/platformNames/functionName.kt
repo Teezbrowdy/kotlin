@@ -1,3 +1,4 @@
+// JVM_JS_DIFFERENCE
 package test
 
 annotation class A(val s: String)

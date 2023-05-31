@@ -1,3 +1,4 @@
+// JVM_JS_DIFFERENCE
 package test
 
 import java.lang.CharSequence

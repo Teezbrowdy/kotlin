@@ -1,3 +1,4 @@
+// JVM_JS_DIFFERENCE
 // !LANGUAGE: -NoConstantValueAttributeForNonConstVals
 // IGNORE_BACKEND: JVM_IR
 //ALLOW_AST_ACCESS

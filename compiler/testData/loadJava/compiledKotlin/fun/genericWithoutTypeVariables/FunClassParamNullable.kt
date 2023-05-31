@@ -1,3 +1,4 @@
+// JVM_JS_DIFFERENCE
 //ALLOW_AST_ACCESS
 package test
 

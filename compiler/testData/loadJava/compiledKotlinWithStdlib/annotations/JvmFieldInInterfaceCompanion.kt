@@ -1,3 +1,4 @@
+// JVM_JS_DIFFERENCE
 // NO_CHECK_SOURCE_VS_BINARY
 
 package test
