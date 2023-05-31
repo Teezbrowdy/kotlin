@@ -225,6 +225,11 @@ fun main(args: Array<String>) {
 //            testClass<AbstractFirJsSteppingTest> {
 //                model("debug/stepping")
 //            }
+
+            testClass<AbstractFirLoadK2CompiledJsKotlinTest> {
+                model("loadJava/compiledKotlin", extension = "kt")
+                model("loadJava/compiledKotlinWithStdlib", extension = "kt")
+            }
         }
     }
 }
