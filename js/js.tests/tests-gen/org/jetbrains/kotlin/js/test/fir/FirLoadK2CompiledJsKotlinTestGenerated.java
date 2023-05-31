@@ -118,12 +118,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
                 }
 
                 @Test
-                @TestMetadata("EnumArgument.kt")
-                public void testEnumArgument() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/annotations/classMembers/EnumArgument.kt");
-                }
-
-                @Test
                 @TestMetadata("Function.kt")
                 public void testFunction() throws Exception {
                     runTest("compiler/testData/loadJava/compiledKotlin/annotations/classMembers/Function.kt");
@@ -212,12 +206,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
                 }
 
                 @Test
-                @TestMetadata("EnumArgument.kt")
-                public void testEnumArgument() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/annotations/classes/EnumArgument.kt");
-                }
-
-                @Test
                 @TestMetadata("MultipleAnnotations.kt")
                 public void testMultipleAnnotations() throws Exception {
                     runTest("compiler/testData/loadJava/compiledKotlin/annotations/classes/MultipleAnnotations.kt");
@@ -273,18 +261,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
                 @TestMetadata("DelegatedProperty.kt")
                 public void testDelegatedProperty() throws Exception {
                     runTest("compiler/testData/loadJava/compiledKotlin/annotations/packageMembers/DelegatedProperty.kt");
-                }
-
-                @Test
-                @TestMetadata("EnumArgument.kt")
-                public void testEnumArgument() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/annotations/packageMembers/EnumArgument.kt");
-                }
-
-                @Test
-                @TestMetadata("EnumArrayArgument.kt")
-                public void testEnumArrayArgument() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/annotations/packageMembers/EnumArrayArgument.kt");
                 }
 
                 @Test
@@ -621,24 +597,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
             }
 
             @Test
-            @TestMetadata("ClassParamUpperClassBound.kt")
-            public void testClassParamUpperClassBound() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/class/ClassParamUpperClassBound.kt");
-            }
-
-            @Test
-            @TestMetadata("ClassParamUpperClassInterfaceBound.kt")
-            public void testClassParamUpperClassInterfaceBound() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/class/ClassParamUpperClassInterfaceBound.kt");
-            }
-
-            @Test
-            @TestMetadata("ClassParamUpperInterfaceBound.kt")
-            public void testClassParamUpperInterfaceBound() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/class/ClassParamUpperInterfaceBound.kt");
-            }
-
-            @Test
             @TestMetadata("ClassTwoParams.kt")
             public void testClassTwoParams() throws Exception {
                 runTest("compiler/testData/loadJava/compiledKotlin/class/ClassTwoParams.kt");
@@ -663,12 +621,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
             }
 
             @Test
-            @TestMetadata("InheritClassWithParam.kt")
-            public void testInheritClassWithParam() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/class/InheritClassWithParam.kt");
-            }
-
-            @Test
             @TestMetadata("InheritSubstitutedMethod.kt")
             public void testInheritSubstitutedMethod() throws Exception {
                 runTest("compiler/testData/loadJava/compiledKotlin/class/InheritSubstitutedMethod.kt");
@@ -678,12 +630,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
             @TestMetadata("InheritTraitWithFunctionParam.kt")
             public void testInheritTraitWithFunctionParam() throws Exception {
                 runTest("compiler/testData/loadJava/compiledKotlin/class/InheritTraitWithFunctionParam.kt");
-            }
-
-            @Test
-            @TestMetadata("InheritTraitWithParam.kt")
-            public void testInheritTraitWithParam() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/class/InheritTraitWithParam.kt");
             }
 
             @Test
@@ -807,12 +753,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
                 @TestMetadata("JavaBeanVar.kt")
                 public void testJavaBeanVar() throws Exception {
                     runTest("compiler/testData/loadJava/compiledKotlin/class/javaBean/JavaBeanVar.kt");
-                }
-
-                @Test
-                @TestMetadata("JavaBeanVarOfGenericType.kt")
-                public void testJavaBeanVarOfGenericType() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/class/javaBean/JavaBeanVarOfGenericType.kt");
                 }
 
                 @Test
@@ -991,21 +931,9 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
             }
 
             @Test
-            @TestMetadata("ConstructorGenericDeep.kt")
-            public void testConstructorGenericDeep() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/constructor/ConstructorGenericDeep.kt");
-            }
-
-            @Test
             @TestMetadata("ConstructorGenericSimple.kt")
             public void testConstructorGenericSimple() throws Exception {
                 runTest("compiler/testData/loadJava/compiledKotlin/constructor/ConstructorGenericSimple.kt");
-            }
-
-            @Test
-            @TestMetadata("ConstructorGenericUpperBound.kt")
-            public void testConstructorGenericUpperBound() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/constructor/ConstructorGenericUpperBound.kt");
             }
 
             @Test
@@ -1167,12 +1095,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
             }
 
             @Test
-            @TestMetadata("ClassDoesNotOverrideMethod.kt")
-            public void testClassDoesNotOverrideMethod() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/ClassDoesNotOverrideMethod.kt");
-            }
-
-            @Test
             @TestMetadata("ClassObject.kt")
             public void testClassObject() throws Exception {
                 runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/ClassObject.kt");
@@ -1233,12 +1155,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
             }
 
             @Test
-            @TestMetadata("FieldOfArrayType.kt")
-            public void testFieldOfArrayType() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/FieldOfArrayType.kt");
-            }
-
-            @Test
             @TestMetadata("FinalFieldAsVal.kt")
             public void testFinalFieldAsVal() throws Exception {
                 runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/FinalFieldAsVal.kt");
@@ -1266,18 +1182,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
             @TestMetadata("InnerClass.kt")
             public void testInnerClass() throws Exception {
                 runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/InnerClass.kt");
-            }
-
-            @Test
-            @TestMetadata("MethodTypePOneUpperBound.kt")
-            public void testMethodTypePOneUpperBound() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/MethodTypePOneUpperBound.kt");
-            }
-
-            @Test
-            @TestMetadata("MethodTypePTwoUpperBounds.kt")
-            public void testMethodTypePTwoUpperBounds() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/MethodTypePTwoUpperBounds.kt");
             }
 
             @Test
@@ -1392,12 +1296,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
                 }
 
                 @Test
-                @TestMetadata("ConstructorWithSeveralParams.kt")
-                public void testConstructorWithSeveralParams() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/kotlinSignature/ConstructorWithSeveralParams.kt");
-                }
-
-                @Test
                 @TestMetadata("ConstructorWithoutParams.kt")
                 public void testConstructorWithoutParams() throws Exception {
                     runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/kotlinSignature/ConstructorWithoutParams.kt");
@@ -1428,12 +1326,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
                 }
 
                 @Test
-                @TestMetadata("MethodWithTypeParameters.kt")
-                public void testMethodWithTypeParameters() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/kotlinSignature/MethodWithTypeParameters.kt");
-                }
-
-                @Test
                 @TestMetadata("MethodWithVararg.kt")
                 public void testMethodWithVararg() throws Exception {
                     runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/kotlinSignature/MethodWithVararg.kt");
@@ -1443,12 +1335,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
                 @TestMetadata("PropertyArrayTypes.kt")
                 public void testPropertyArrayTypes() throws Exception {
                     runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/kotlinSignature/PropertyArrayTypes.kt");
-                }
-
-                @Test
-                @TestMetadata("PropertyComplexTypes.kt")
-                public void testPropertyComplexTypes() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/kotlinSignature/PropertyComplexTypes.kt");
                 }
 
                 @Test
@@ -1488,18 +1374,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
                     @TestMetadata("ExplicitFieldGettersAndSetters.kt")
                     public void testExplicitFieldGettersAndSetters() throws Exception {
                         runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/kotlinSignature/error/ExplicitFieldGettersAndSetters.kt");
-                    }
-
-                    @Test
-                    @TestMetadata("ExtraUpperBound.kt")
-                    public void testExtraUpperBound() throws Exception {
-                        runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/kotlinSignature/error/ExtraUpperBound.kt");
-                    }
-
-                    @Test
-                    @TestMetadata("MissingUpperBound.kt")
-                    public void testMissingUpperBound() throws Exception {
-                        runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/kotlinSignature/error/MissingUpperBound.kt");
                     }
 
                     @Test
@@ -1596,18 +1470,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
                     @TestMetadata("WrongTypeName3.kt")
                     public void testWrongTypeName3() throws Exception {
                         runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/kotlinSignature/error/WrongTypeName3.kt");
-                    }
-
-                    @Test
-                    @TestMetadata("WrongTypeParameterBoundStructure1.kt")
-                    public void testWrongTypeParameterBoundStructure1() throws Exception {
-                        runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/kotlinSignature/error/WrongTypeParameterBoundStructure1.kt");
-                    }
-
-                    @Test
-                    @TestMetadata("WrongTypeParameterBoundStructure2.kt")
-                    public void testWrongTypeParameterBoundStructure2() throws Exception {
-                        runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/kotlinSignature/error/WrongTypeParameterBoundStructure2.kt");
                     }
 
                     @Test
@@ -2058,21 +1920,9 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
                         }
 
                         @Test
-                        @TestMetadata("TwoBounds.kt")
-                        public void testTwoBounds() throws Exception {
-                            runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/kotlinSignature/propagation/typeParameter/TwoBounds.kt");
-                        }
-
-                        @Test
                         @TestMetadata("TwoSuperclasses.kt")
                         public void testTwoSuperclasses() throws Exception {
                             runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/kotlinSignature/propagation/typeParameter/TwoSuperclasses.kt");
-                        }
-
-                        @Test
-                        @TestMetadata("TwoTypeParameters.kt")
-                        public void testTwoTypeParameters() throws Exception {
-                            runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/kotlinSignature/propagation/typeParameter/TwoTypeParameters.kt");
                         }
 
                         @Test
@@ -2131,12 +1981,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
                 @Test
                 public void testAllFilesPresentInModality() throws Exception {
                     KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/loadJava/compiledKotlin/fromLoadJava/modality"), Pattern.compile("^(.+)\\.kt$"), null, TargetBackend.JS_IR, true);
-                }
-
-                @Test
-                @TestMetadata("ModalityOfFakeOverrides.kt")
-                public void testModalityOfFakeOverrides() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/fromLoadJava/modality/ModalityOfFakeOverrides.kt");
                 }
             }
 
@@ -2227,12 +2071,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
             }
 
             @Test
-            @TestMetadata("NoSamAdapter.kt")
-            public void testNoSamAdapter() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/fun/NoSamAdapter.kt");
-            }
-
-            @Test
             @TestMetadata("NoSamConstructor.kt")
             public void testNoSamConstructor() throws Exception {
                 runTest("compiler/testData/loadJava/compiledKotlin/fun/NoSamConstructor.kt");
@@ -2296,24 +2134,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
                 }
 
                 @Test
-                @TestMetadata("FunParamUpperClassBound.kt")
-                public void testFunParamUpperClassBound() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/fun/genericWithTypeVariables/FunParamUpperClassBound.kt");
-                }
-
-                @Test
-                @TestMetadata("FunParamUpperClassInterfaceBound.kt")
-                public void testFunParamUpperClassInterfaceBound() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/fun/genericWithTypeVariables/FunParamUpperClassInterfaceBound.kt");
-                }
-
-                @Test
-                @TestMetadata("FunParamUpperInterfaceBound.kt")
-                public void testFunParamUpperInterfaceBound() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/fun/genericWithTypeVariables/FunParamUpperInterfaceBound.kt");
-                }
-
-                @Test
                 @TestMetadata("FunParamVaragParam.kt")
                 public void testFunParamVaragParam() throws Exception {
                     runTest("compiler/testData/loadJava/compiledKotlin/fun/genericWithTypeVariables/FunParamVaragParam.kt");
@@ -2345,12 +2165,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
                 @TestMetadata("FunClassParamNullable.kt")
                 public void testFunClassParamNullable() throws Exception {
                     runTest("compiler/testData/loadJava/compiledKotlin/fun/genericWithoutTypeVariables/FunClassParamNullable.kt");
-                }
-
-                @Test
-                @TestMetadata("FunParamNullable.kt")
-                public void testFunParamNullable() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/fun/genericWithoutTypeVariables/FunParamNullable.kt");
                 }
 
                 @Test
@@ -2418,21 +2232,9 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
                 }
 
                 @Test
-                @TestMetadata("FunParamNotNull.kt")
-                public void testFunParamNotNull() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/fun/nonGeneric/FunParamNotNull.kt");
-                }
-
-                @Test
                 @TestMetadata("FunVarargInt.kt")
                 public void testFunVarargInt() throws Exception {
                     runTest("compiler/testData/loadJava/compiledKotlin/fun/nonGeneric/FunVarargInt.kt");
-                }
-
-                @Test
-                @TestMetadata("FunVarargInteger.kt")
-                public void testFunVarargInteger() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/fun/nonGeneric/FunVarargInteger.kt");
                 }
 
                 @Test
@@ -2457,18 +2259,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
                 @TestMetadata("NsFunGetFoo.kt")
                 public void testNsFunGetFoo() throws Exception {
                     runTest("compiler/testData/loadJava/compiledKotlin/fun/nonGeneric/NsFunGetFoo.kt");
-                }
-
-                @Test
-                @TestMetadata("ReturnTypeNotNull.kt")
-                public void testReturnTypeNotNull() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/fun/nonGeneric/ReturnTypeNotNull.kt");
-                }
-
-                @Test
-                @TestMetadata("ReturnTypeNullable.kt")
-                public void testReturnTypeNullable() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/fun/nonGeneric/ReturnTypeNullable.kt");
                 }
             }
 
@@ -2593,18 +2383,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
             public void testAllFilesPresentInPlatformTypes() throws Exception {
                 KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/loadJava/compiledKotlin/platformTypes"), Pattern.compile("^(.+)\\.kt$"), null, TargetBackend.JS_IR, true);
             }
-
-            @Test
-            @TestMetadata("notnullTypeArgument.kt")
-            public void testNotnullTypeArgument() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/platformTypes/notnullTypeArgument.kt");
-            }
-
-            @Test
-            @TestMetadata("nullableTypeArgument.kt")
-            public void testNullableTypeArgument() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/platformTypes/nullableTypeArgument.kt");
-            }
         }
 
         @Nested
@@ -2653,12 +2431,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
             }
 
             @Test
-            @TestMetadata("ExtValClass.kt")
-            public void testExtValClass() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/prop/ExtValClass.kt");
-            }
-
-            @Test
             @TestMetadata("ExtValInClass.kt")
             public void testExtValInClass() throws Exception {
                 runTest("compiler/testData/loadJava/compiledKotlin/prop/ExtValInClass.kt");
@@ -2683,12 +2455,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
             }
 
             @Test
-            @TestMetadata("ExtValIntListQOfIntInClass.kt")
-            public void testExtValIntListQOfIntInClass() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/prop/ExtValIntListQOfIntInClass.kt");
-            }
-
-            @Test
             @TestMetadata("ExtValIntTInClass.kt")
             public void testExtValIntTInClass() throws Exception {
                 runTest("compiler/testData/loadJava/compiledKotlin/prop/ExtValIntTInClass.kt");
@@ -2704,12 +2470,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
             @TestMetadata("ExtValTIntInClass.kt")
             public void testExtValTIntInClass() throws Exception {
                 runTest("compiler/testData/loadJava/compiledKotlin/prop/ExtValTIntInClass.kt");
-            }
-
-            @Test
-            @TestMetadata("ExtVarClass.kt")
-            public void testExtVarClass() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/prop/ExtVarClass.kt");
             }
 
             @Test
@@ -2828,66 +2588,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
                 public void testAllFilesPresentInDefaultAccessors() throws Exception {
                     KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/loadJava/compiledKotlin/prop/defaultAccessors"), Pattern.compile("^(.+)\\.kt$"), null, TargetBackend.JS_IR, true);
                 }
-
-                @Test
-                @TestMetadata("ClassVal.kt")
-                public void testClassVal() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/prop/defaultAccessors/ClassVal.kt");
-                }
-
-                @Test
-                @TestMetadata("ClassValParams.kt")
-                public void testClassValParams() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/prop/defaultAccessors/ClassValParams.kt");
-                }
-
-                @Test
-                @TestMetadata("ClassValWithGet.kt")
-                public void testClassValWithGet() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/prop/defaultAccessors/ClassValWithGet.kt");
-                }
-
-                @Test
-                @TestMetadata("ClassVar.kt")
-                public void testClassVar() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/prop/defaultAccessors/ClassVar.kt");
-                }
-
-                @Test
-                @TestMetadata("ClassVarModality.kt")
-                public void testClassVarModality() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/prop/defaultAccessors/ClassVarModality.kt");
-                }
-
-                @Test
-                @TestMetadata("ClassVarParams.kt")
-                public void testClassVarParams() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/prop/defaultAccessors/ClassVarParams.kt");
-                }
-
-                @Test
-                @TestMetadata("ClassVarWithGet.kt")
-                public void testClassVarWithGet() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/prop/defaultAccessors/ClassVarWithGet.kt");
-                }
-
-                @Test
-                @TestMetadata("ClassVarWithSet.kt")
-                public void testClassVarWithSet() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/prop/defaultAccessors/ClassVarWithSet.kt");
-                }
-
-                @Test
-                @TestMetadata("ExtValLong.kt")
-                public void testExtValLong() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/prop/defaultAccessors/ExtValLong.kt");
-                }
-
-                @Test
-                @TestMetadata("ExtVarLong.kt")
-                public void testExtVarLong() throws Exception {
-                    runTest("compiler/testData/loadJava/compiledKotlin/prop/defaultAccessors/ExtVarLong.kt");
-                }
             }
         }
 
@@ -2922,12 +2622,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
             @TestMetadata("ArrayOfInt.kt")
             public void testArrayOfInt() throws Exception {
                 runTest("compiler/testData/loadJava/compiledKotlin/type/ArrayOfInt.kt");
-            }
-
-            @Test
-            @TestMetadata("ArrayOfInteger.kt")
-            public void testArrayOfInteger() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/type/ArrayOfInteger.kt");
             }
 
             @Test
@@ -2973,48 +2667,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
             }
 
             @Test
-            @TestMetadata("jlInteger.kt")
-            public void testJlInteger() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/type/jlInteger.kt");
-            }
-
-            @Test
-            @TestMetadata("jlIntegerQ.kt")
-            public void testJlIntegerQ() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/type/jlIntegerQ.kt");
-            }
-
-            @Test
-            @TestMetadata("jlNumber.kt")
-            public void testJlNumber() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/type/jlNumber.kt");
-            }
-
-            @Test
-            @TestMetadata("jlObject.kt")
-            public void testJlObject() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/type/jlObject.kt");
-            }
-
-            @Test
-            @TestMetadata("jlObjectQ.kt")
-            public void testJlObjectQ() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/type/jlObjectQ.kt");
-            }
-
-            @Test
-            @TestMetadata("jlString.kt")
-            public void testJlString() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/type/jlString.kt");
-            }
-
-            @Test
-            @TestMetadata("jlStringQ.kt")
-            public void testJlStringQ() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/type/jlStringQ.kt");
-            }
-
-            @Test
             @TestMetadata("ListOfAny.kt")
             public void testListOfAny() throws Exception {
                 runTest("compiler/testData/loadJava/compiledKotlin/type/ListOfAny.kt");
@@ -3033,18 +2685,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
             }
 
             @Test
-            @TestMetadata("ListOfString.kt")
-            public void testListOfString() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/type/ListOfString.kt");
-            }
-
-            @Test
-            @TestMetadata("ListOfjlString.kt")
-            public void testListOfjlString() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/type/ListOfjlString.kt");
-            }
-
-            @Test
             @TestMetadata("Nothing.kt")
             public void testNothing() throws Exception {
                 runTest("compiler/testData/loadJava/compiledKotlin/type/Nothing.kt");
@@ -3054,12 +2694,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
             @TestMetadata("NothingQ.kt")
             public void testNothingQ() throws Exception {
                 runTest("compiler/testData/loadJava/compiledKotlin/type/NothingQ.kt");
-            }
-
-            @Test
-            @TestMetadata("platform.kt")
-            public void testPlatform() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlin/type/platform.kt");
             }
 
             @Test
@@ -3214,12 +2848,6 @@ public class FirLoadK2CompiledJsKotlinTestGenerated extends AbstractFirLoadK2Com
             @Test
             public void testAllFilesPresentInAnnotations() throws Exception {
                 KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler/testData/loadJava/compiledKotlinWithStdlib/annotations"), Pattern.compile("^(.+)\\.kt$"), null, TargetBackend.JS_IR, true);
-            }
-
-            @Test
-            @TestMetadata("annotationClassDefaultValues.kt")
-            public void testAnnotationClassDefaultValues() throws Exception {
-                runTest("compiler/testData/loadJava/compiledKotlinWithStdlib/annotations/annotationClassDefaultValues.kt");
             }
 
             @Test
