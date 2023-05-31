@@ -30,10 +30,11 @@ gradleEnterprise {
         }
 
         val username = if (isTeamCity) "TeamCity" else "concealed"
+        val shouldObfuscateUsername = isTeamCity || buildProperties.getBoolean("kotlin.build.scan.obfuscate.username", true)
         obfuscation {
             ipAddresses { _ -> listOf("0.0.0.0") }
             hostname { _ -> "concealed" }
-            username { _ -> username }
+            username { originalUsername -> if (shouldObfuscateUsername) username else originalUsername }
         }
     }
 }
