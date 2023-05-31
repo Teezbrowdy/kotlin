@@ -20320,6 +20320,12 @@ public class FirLightTreeOldFrontendDiagnosticsTestGenerated extends AbstractFir
                 }
 
                 @Test
+                @TestMetadata("nonDirectHiddenOverride.kt")
+                public void testNonDirectHiddenOverride() throws Exception {
+                    runTest("compiler/testData/diagnostics/tests/j+k/collectionOverrides/nonDirectHiddenOverride.kt");
+                }
+
+                @Test
                 @TestMetadata("overridesBuiltinNoMagic.kt")
                 public void testOverridesBuiltinNoMagic() throws Exception {
                     runTest("compiler/testData/diagnostics/tests/j+k/collectionOverrides/overridesBuiltinNoMagic.kt");
