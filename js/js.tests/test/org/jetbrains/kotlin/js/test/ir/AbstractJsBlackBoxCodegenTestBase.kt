@@ -94,6 +94,10 @@ abstract class AbstractJsBlackBoxCodegenTestBase<R : ResultingArtifact.FrontendO
             useHandlers(::JsSourceMapPathRewriter)
         }
 
+        useAfterAnalysisCheckers(
+            ::JsArtifactsDumpHandler
+        )
+
         forTestsMatching("compiler/testData/codegen/box/involvesIrInterpreter/*") {
             enableMetaInfoHandler()
             configureKlibArtifactsHandlersStep {
