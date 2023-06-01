@@ -115,3 +115,6 @@ public annotation class CEnumEntryAlias(val entryName: String)
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.BINARY)
 public annotation class CEnumVarTypeSize(val size: Int)
+
+@kotlin.native.internal.GCUnsafeCall("Kotlin_objc_resetAssociatedObject")
+external fun Any.resetAssociatedObject()
