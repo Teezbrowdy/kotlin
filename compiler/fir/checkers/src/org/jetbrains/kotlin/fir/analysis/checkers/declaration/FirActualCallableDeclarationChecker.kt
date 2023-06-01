@@ -37,7 +37,7 @@ object FirActualCallableDeclarationChecker : FirCallableDeclarationChecker() {
 
     private fun checkReturnTypes(callableDeclaration: FirCallableDeclaration, context: CheckerContext, reporter: DiagnosticReporter) {
         val actualFunctionSymbol = callableDeclaration.symbol
-        val expectFunctionSymbol = actualFunctionSymbol.getSingleCompatibleExpectForActualOrNull() as? FirCallableSymbol ?: return
+        val expectFunctionSymbol = actualFunctionSymbol.getSingleExpectForActualOrNull() as? FirCallableSymbol ?: return
 
         val expectTypeParameters = expectFunctionSymbol.getContainingClassSymbol(expectFunctionSymbol.moduleData.session)
             ?.typeParameterSymbols.orEmpty()
