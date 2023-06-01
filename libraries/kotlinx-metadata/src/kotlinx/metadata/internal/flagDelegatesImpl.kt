@@ -7,6 +7,7 @@
 package kotlinx.metadata.internal
 
 import kotlinx.metadata.*
+import kotlinx.metadata.internal.FlagImpl as Flag
 import kotlin.enums.EnumEntries
 import kotlin.reflect.KMutableProperty1
 import kotlin.reflect.KProperty
@@ -15,7 +16,7 @@ import org.jetbrains.kotlin.metadata.deserialization.Flags as ProtoFlags
 import org.jetbrains.kotlin.protobuf.Internal.EnumLite as ProtoEnumLite
 
 internal class EnumFlagDelegate<Node, E : Enum<E>>(
-    val flags: KMutableProperty1<Node, Flags>,
+    val flags: KMutableProperty1<Node, Int>,
     private val protoSet: ProtoFlagSet<out ProtoEnumLite>,
     private val entries: EnumEntries<E>,
     private val flagValues: List<Flag>
@@ -30,7 +31,7 @@ internal class EnumFlagDelegate<Node, E : Enum<E>>(
 }
 
 // Public in internal package - for reuse in JvmFlags
-public class BooleanFlagDelegate<Node>(private val flags: KMutableProperty1<Node, Flags>, private val flag: Flag) {
+public class BooleanFlagDelegate<Node>(private val flags: KMutableProperty1<Node, Int>, private val flag: Flag) {
     private val mask: Int
 
     init {
@@ -47,13 +48,13 @@ public class BooleanFlagDelegate<Node>(private val flags: KMutableProperty1<Node
 }
 
 
-internal fun <Node> visibilityDelegate(flags: KMutableProperty1<Node, Flags>) =
+internal fun <Node> visibilityDelegate(flags: KMutableProperty1<Node, Int>) =
     EnumFlagDelegate(flags, ProtoFlags.VISIBILITY, Visibility.entries, Visibility.entries.map { it.flag })
 
-internal fun <Node> modalityDelegate(flags: KMutableProperty1<Node, Flags>) =
+internal fun <Node> modalityDelegate(flags: KMutableProperty1<Node, Int>) =
     EnumFlagDelegate(flags, ProtoFlags.MODALITY, Modality.entries, Modality.entries.map { it.flag })
 
-internal fun <Node> memberKindDelegate(flags: KMutableProperty1<Node, Flags>) =
+internal fun <Node> memberKindDelegate(flags: KMutableProperty1<Node, Int>) =
     EnumFlagDelegate(flags, ProtoFlags.MEMBER_KIND, MemberKind.entries, MemberKind.entries.map { it.flag })
 
 internal fun classBooleanFlag(flag: Flag) = BooleanFlagDelegate(KmClass::flags, flag)
@@ -70,5 +71,5 @@ internal fun typeBooleanFlag(flag: Flag) = BooleanFlagDelegate(KmType::flags, fl
 
 internal fun valueParameterBooleanFlag(flag: Flag) = BooleanFlagDelegate(KmValueParameter::flags, flag)
 
-internal fun <Node> annotationsOn(flags: KMutableProperty1<Node, Flags>) = BooleanFlagDelegate(flags, Flag(ProtoFlags.HAS_ANNOTATIONS))
+internal fun <Node> annotationsOn(flags: KMutableProperty1<Node, Int>) = BooleanFlagDelegate(flags, Flag(ProtoFlags.HAS_ANNOTATIONS))
 
