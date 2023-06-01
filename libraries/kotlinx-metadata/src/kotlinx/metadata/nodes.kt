@@ -39,6 +39,7 @@ class KmClass : KmClassVisitor(), KmDeclarationContainer {
     /**
      * Class flags, consisting of [Flag.HAS_ANNOTATIONS], visibility flag, modality flag and [Flag.Class] flags.
      */
+    @Deprecated("$flagAccessPrefix KmClass, such as KmClass.visibility")
     var flags: Int = 0
 
     /**
@@ -351,7 +352,9 @@ class KmLambda : KmLambdaVisitor() {
  * @property flags constructor flags, consisting of [Flag.HAS_ANNOTATIONS], visibility flag and [Flag.Constructor] flags
  */
 @Suppress("DEPRECATION")
-class KmConstructor @Deprecated(FLAGS_CTOR_DEPRECATED) constructor(var flags: Int) :
+class KmConstructor @Deprecated(flagsCtorDeprecated) constructor(
+    @Deprecated("$flagAccessPrefix KmConstructor, such as KmConstructor.visibility") var flags: Int,
+) :
     KmConstructorVisitor() {
     constructor() : this(0)
 
@@ -401,8 +404,8 @@ class KmConstructor @Deprecated(FLAGS_CTOR_DEPRECATED) constructor(var flags: In
  * @property name the name of the function
  */
 @Suppress("DEPRECATION")
-class KmFunction @Deprecated(FLAGS_CTOR_DEPRECATED) constructor(
-    var flags: Int,
+class KmFunction @Deprecated(flagsCtorDeprecated) constructor(
+    @Deprecated("$flagAccessPrefix KmFunction, such as KmFunction.visibility") var flags: Int,
     var name: String,
 ) : KmFunctionVisitor() {
 
@@ -518,8 +521,8 @@ public class KmPropertyAccessorAttributes internal constructor(internal var flag
  * @property name the name of the property
  */
 @Suppress("DEPRECATION")
-class KmProperty @Deprecated(FLAGS_CTOR_DEPRECATED) constructor(
-    var flags: Int,
+class KmProperty @Deprecated(flagsCtorDeprecated) constructor(
+    @Deprecated("$flagAccessPrefix KmProperty, such as KmProperty.visibility") var flags: Int,
     var name: String,
     getterFlags: Int,
     setterFlags: Int,
@@ -553,6 +556,7 @@ class KmProperty @Deprecated(FLAGS_CTOR_DEPRECATED) constructor(
      * Property accessor flags, consisting of [Flag.HAS_ANNOTATIONS], visibility flag, modality flag
      * and [Flag.PropertyAccessor] flags.
      */
+    @Deprecated("$flagAccessPrefix KmProperty.getter, such as KmProperty.getter.isNotDefault")
     var getterFlags: Int
         get() = getter.flags
         set(value) {
@@ -573,6 +577,7 @@ class KmProperty @Deprecated(FLAGS_CTOR_DEPRECATED) constructor(
      * Setting this property when setter is absent changes the value, but does not create new [setter].
      * This behavior is for compatibility only and will be removed in future versions.
      */
+    @Deprecated("$flagAccessPrefix KmProperty.setter, such as KmProperty.setter.isNotDefault")
     var setterFlags: Int = getDefaultPropertyAccessorFlags(flags)
         get() = setter?.flags ?: field
         set(value) {
@@ -677,8 +682,8 @@ class KmProperty @Deprecated(FLAGS_CTOR_DEPRECATED) constructor(
  * @property name the name of the type alias
  */
 @Suppress("DEPRECATION")
-class KmTypeAlias @Deprecated(FLAGS_CTOR_DEPRECATED) constructor(
-    var flags: Int,
+class KmTypeAlias @Deprecated(flagsCtorDeprecated) constructor(
+    @Deprecated("$flagAccessPrefix KmTypeAlias, such as KmTypeAlias.visibility") var flags: Int,
     var name: String,
 ) : KmTypeAliasVisitor() {
 
@@ -762,8 +767,8 @@ class KmTypeAlias @Deprecated(FLAGS_CTOR_DEPRECATED) constructor(
  * @property name the name of the value parameter
  */
 @Suppress("DEPRECATION")
-class KmValueParameter @Deprecated(FLAGS_CTOR_DEPRECATED) constructor(
-    var flags: Int,
+class KmValueParameter @Deprecated(flagsCtorDeprecated) constructor(
+    @Deprecated("$flagAccessPrefix KmValueParameter, such as KmValueParameter.declaresDefaultValue") var flags: Int,
     var name: String,
 ) : KmValueParameterVisitor() {
 
@@ -819,8 +824,8 @@ class KmValueParameter @Deprecated(FLAGS_CTOR_DEPRECATED) constructor(
  * @property variance the declaration-site variance of the type parameter
  */
 @Suppress("DEPRECATION")
-class KmTypeParameter @Deprecated(FLAGS_CTOR_DEPRECATED) constructor(
-    var flags: Int,
+class KmTypeParameter @Deprecated(flagsCtorDeprecated) constructor(
+    @Deprecated("$flagAccessPrefix KmTypeParameter, such as KmTypeParameter.isReified") var flags: Int,
     var name: String,
     var id: Int,
     var variance: KmVariance,
@@ -863,7 +868,9 @@ class KmTypeParameter @Deprecated(FLAGS_CTOR_DEPRECATED) constructor(
  * @property flags type flags, consisting of [Flag.Type] flags
  */
 @Suppress("DEPRECATION")
-class KmType @Deprecated(FLAGS_CTOR_DEPRECATED) constructor(var flags: Int) : KmTypeVisitor() {
+class KmType @Deprecated(flagsCtorDeprecated) constructor(
+    @Deprecated("$flagAccessPrefix KmType, such as KmType.isNullable") var flags: Int
+) : KmTypeVisitor() {
 
     constructor() : this(0)
 
@@ -1129,6 +1136,7 @@ class KmEffectExpression : KmEffectExpressionVisitor() {
     /**
      * Effect expression flags, consisting of [Flag.EffectExpression] flags.
      */
+    @Deprecated("$flagAccessPrefix KmEffectExpression, such as KmEffectExpression.isNegated")
     var flags: Int = flagsOf()
 
     /**
@@ -1279,5 +1287,7 @@ internal fun <T> T.addTo(collection: MutableCollection<T>): T {
     return this
 }
 
-private const val FLAGS_CTOR_DEPRECATED =
+private const val flagsCtorDeprecated =
     "Constructor with flags is deprecated, use constructor without flags and assign them or corresponding extension properties directly."
+
+private const val flagAccessPrefix = "Flag API is deprecated. Please use corresponding member extensions on"
