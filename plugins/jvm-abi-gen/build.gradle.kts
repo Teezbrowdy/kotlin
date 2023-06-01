@@ -34,7 +34,7 @@ dependencies {
     // Include kotlinx.metadata for metadata stripping.
     // Note that kotlinx-metadata-jvm already includes kotlinx-metadata, core:metadata, core:metadata.jvm,
     // and protobuf-lite, so we only need to include kotlinx-metadata-jvm in the shadow jar.
-    compileOnly(project(":kotlinx-metadata"))
+    compileOnly(commonDependency("org.jetbrains.kotlinx:kotlinx-metadata-jvm"))
     embedded(commonDependency("org.jetbrains.kotlinx:kotlinx-metadata-jvm"))
 
     compileOnly(intellijCore())
