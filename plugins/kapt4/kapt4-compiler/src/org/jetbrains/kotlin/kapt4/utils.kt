@@ -60,22 +60,6 @@ inline fun <T, R> mapJListIndexed(values: Iterable<T>?, f: (Int, T) -> R?): Java
     return result
 }
 
-inline fun <T> mapPairedValuesJList(valuePairs: List<Any>?, f: (String, Any) -> T?): JavacList<T> {
-    if (valuePairs == null || valuePairs.isEmpty()) return JavacList.nil()
-
-    val size = valuePairs.size
-    var result = JavacList.nil<T>()
-    assert(size % 2 == 0)
-    var index = 0
-    while (index < size) {
-        val key = valuePairs[index] as String
-        val value = valuePairs[index + 1]
-        f(key, value)?.let { result = result.prepend(it) }
-        index += 2
-    }
-    return result.reverse()
-}
-
 operator fun <T : Any> JavacList<T>.plus(other: JavacList<T>): JavacList<T> {
     return this.appendList(other)
 }
@@ -271,36 +255,6 @@ val PsiClass.qualifiedNameWithDollars: String?
         val classNameWithDollars = className.replace(".", "$")
         return "$packageName.$classNameWithDollars"
     }
-
-// ----------------------------- TODO delete -----------------------------
-
-val allAccOpcodes = listOf(
-    "ACC_PUBLIC" to Opcodes.ACC_PUBLIC,
-    "ACC_PRIVATE" to Opcodes.ACC_PRIVATE,
-    "ACC_PROTECTED" to Opcodes.ACC_PROTECTED,
-    "ACC_STATIC" to Opcodes.ACC_STATIC,
-    "ACC_FINAL" to Opcodes.ACC_FINAL,
-    "ACC_SUPER" to Opcodes.ACC_SUPER,
-    "ACC_SYNCHRONIZED" to Opcodes.ACC_SYNCHRONIZED,
-    "ACC_OPEN" to Opcodes.ACC_OPEN,
-    "ACC_TRANSITIVE" to Opcodes.ACC_TRANSITIVE,
-    "ACC_VOLATILE" to Opcodes.ACC_VOLATILE,
-    "ACC_BRIDGE" to Opcodes.ACC_BRIDGE,
-    "ACC_STATIC_PHASE" to Opcodes.ACC_STATIC_PHASE,
-    "ACC_VARARGS" to Opcodes.ACC_VARARGS,
-    "ACC_TRANSIENT" to Opcodes.ACC_TRANSIENT,
-    "ACC_NATIVE" to Opcodes.ACC_NATIVE,
-    "ACC_INTERFACE" to Opcodes.ACC_INTERFACE,
-    "ACC_ABSTRACT" to Opcodes.ACC_ABSTRACT,
-    "ACC_STRICT" to Opcodes.ACC_STRICT,
-    "ACC_SYNTHETIC" to Opcodes.ACC_SYNTHETIC,
-    "ACC_ANNOTATION" to Opcodes.ACC_ANNOTATION,
-    "ACC_ENUM" to Opcodes.ACC_ENUM,
-    "ACC_MANDATED" to Opcodes.ACC_MANDATED,
-    "ACC_MODULE" to Opcodes.ACC_MODULE,
-    "ACC_RECORD" to Opcodes.ACC_RECORD,
-    "ACC_DEPRECATED" to Opcodes.ACC_DEPRECATED,
-)
 
 val PsiMethod.properName: String
     get() = if (isConstructor) "<init>" else name
