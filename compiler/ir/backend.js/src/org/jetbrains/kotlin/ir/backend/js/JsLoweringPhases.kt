@@ -999,12 +999,6 @@ private val collectionClassesWhichRequiresExtendedMetadataLowering = makeBodyLow
     description = "[Optimization] Collect classes which use ::class",
 )
 
-private val skipExtendedMetadataLowering = makeDeclarationTransformerPhase(
-    ::SkipExtendedMetadataLowering,
-    name = "SkipExtendedMetadataLowering",
-    description = "[Optimization] Mark classes which could live without defaultConstructor in metadata",
-)
-
 private val es6PrimaryConstructorUsageOptimizationLowering = makeBodyLoweringPhase(
     ::ES6PrimaryConstructorUsageOptimizationLowering,
     name = "ES6PrimaryConstructorUsageOptimizationLowering",
@@ -1034,7 +1028,6 @@ val optimizationLoweringList = listOf<Lowering>(
     purifyObjectInstanceGetters,
     inlineObjectsWithPureInitialization,
     collectionClassesWhichRequiresExtendedMetadataLowering,
-    skipExtendedMetadataLowering
 )
 
 val jsOptimizationPhases = SameTypeNamedCompilerPhase(
