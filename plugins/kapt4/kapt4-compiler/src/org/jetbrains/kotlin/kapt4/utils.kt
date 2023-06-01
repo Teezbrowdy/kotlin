@@ -8,12 +8,9 @@ package org.jetbrains.kotlin.kapt4
 import com.intellij.lang.jvm.JvmModifier
 import com.intellij.psi.*
 import com.intellij.psi.util.ClassUtil
-import com.intellij.psi.util.PsiClassUtil
 import com.intellij.psi.util.PsiTypesUtil
 import com.intellij.psi.util.PsiUtil
-import org.jetbrains.kotlin.asJava.elements.KtLightElement
 import org.jetbrains.kotlin.builtins.StandardNames
-import org.jetbrains.kotlin.psi.KtElement
 import org.jetbrains.org.objectweb.asm.Opcodes
 import java.util.*
 
@@ -79,21 +76,9 @@ inline fun <T> mapPairedValuesJList(valuePairs: List<Any>?, f: (String, Any) -> 
     return result.reverse()
 }
 
-fun pairedListToMap(valuePairs: List<Any>?): Map<String, Any?> {
-    val map = mutableMapOf<String, Any?>()
-
-    mapPairedValuesJList(valuePairs) { key, value ->
-        map.put(key, value)
-    }
-
-    return map
-}
-
 operator fun <T : Any> JavacList<T>.plus(other: JavacList<T>): JavacList<T> {
     return this.appendList(other)
 }
-
-fun <T : Any> Iterable<T>.toJList(): JavacList<T> = JavacList.from(this)
 
 val PsiMethod.signature: String
     get() = ClassUtil.getAsmMethodSignature(this)
@@ -132,12 +117,6 @@ val PsiType.simpleNameOrNull: String?
             else -> resolvedClass?.name
         }
     }
-
-val PsiType.isErrorType: Boolean
-    get() = qualifiedNameOrNull == null
-
-val PsiElement.ktOrigin: KtElement
-    get() = (this as? KtLightElement<*, *>)?.kotlinOrigin ?: TODO()
 
 val PsiClass.defaultType: PsiType
     get() = PsiTypesUtil.getClassType(this)
@@ -322,8 +301,6 @@ val allAccOpcodes = listOf(
     "ACC_RECORD" to Opcodes.ACC_RECORD,
     "ACC_DEPRECATED" to Opcodes.ACC_DEPRECATED,
 )
-
-fun showOpcodes(flags: Int) = allAccOpcodes.filter { (flags and it.second) != 0 }.map { it.first }
 
 val PsiMethod.properName: String
     get() = if (isConstructor) "<init>" else name
