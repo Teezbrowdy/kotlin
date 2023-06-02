@@ -11,6 +11,6 @@ class C {
 }
 
 fun f() {
-    <!RESOLUTION_TO_CLASSIFIER!>TestInterface<!>()
+    <!INTERFACE_AS_FUNCTION!>TestInterface<!>()
     C.<!RESOLUTION_TO_CLASSIFIER!>I<!>()
 }

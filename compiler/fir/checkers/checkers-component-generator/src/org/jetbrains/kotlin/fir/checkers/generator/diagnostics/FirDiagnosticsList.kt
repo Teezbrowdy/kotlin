@@ -159,6 +159,12 @@ object DIAGNOSTICS_LIST : DiagnosticList("FirErrors") {
             parameter<String>("expression")
             parameter<ConeKotlinType>("type")
         }
+        val INTERFACE_AS_FUNCTION by error<PsiElement> {
+            parameter<FirRegularClassSymbol>("classSymbol")
+        }
+        val EXPECT_CLASS_AS_FUNCTION by error<PsiElement> {
+            parameter<FirRegularClassSymbol>("classSymbol")
+        }
         val RESOLUTION_TO_CLASSIFIER by error<PsiElement> {
             parameter<FirRegularClassSymbol>("classSymbol")
         }
