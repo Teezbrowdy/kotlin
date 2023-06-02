@@ -10,6 +10,7 @@ import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.provider.Provider
+import org.gradle.util.GradleVersion
 import org.jetbrains.kotlin.gradle.targets.js.MultiplePluginDeclarationDetector
 import org.jetbrains.kotlin.gradle.targets.js.npm.GradleNodeModulesCache
 import org.jetbrains.kotlin.gradle.targets.js.npm.KotlinNpmResolutionManager
@@ -134,6 +135,7 @@ open class NodeJsRootPlugin : Plugin<Project> {
             project
                 .providers
                 .of(UnameValueSource::class.java) {}
+                .configurationCacheCompat()
                 .get()
         }
 
@@ -141,6 +143,15 @@ open class NodeJsRootPlugin : Plugin<Project> {
         val arch = System.getProperty("os.arch")
         val platform = parsePlatform(name, arch, uname)
         extension.platform.set(platform)
+    }
+
+    private fun <T : Any> Provider<T>.configurationCacheCompat(): Provider<T> {
+        return if (GradleVersion.current() < GradleVersion.version("7.4")) {
+            @Suppress("DEPRECATION")
+            this.forUseAtConfigurationTime()
+        } else {
+            this
+        }
     }
 
     companion object {
