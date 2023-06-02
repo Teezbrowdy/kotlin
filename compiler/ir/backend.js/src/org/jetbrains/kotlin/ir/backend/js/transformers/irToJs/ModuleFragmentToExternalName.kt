@@ -44,7 +44,7 @@ class ModuleFragmentToExternalName(private val jsOutputNamesMapping: Map<IrModul
 
     private val IrFile.stableFileName: String
         get() {
-            val prefix = fqName.asString().replace('.', '/')
+            val prefix = packageFqName.asString().replace('.', '/')
             val fileName = getJsName() ?: name.substringBefore(".kt")
             return "$prefix${if (prefix.isNotEmpty()) "/" else ""}$fileName"
         }

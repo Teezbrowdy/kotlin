@@ -324,7 +324,7 @@ class IrModuleToJsTransformer(
         val internalModuleName = ReservedJsNames.makeInternalModuleName().takeIf { !isEsModules }
         val staticContext = JsStaticContext(backendContext, nameGenerator, nameScope, mode)
 
-        return JsIrProgramFragment(file.fqName.asString()).apply {
+        return JsIrProgramFragment(file.packageFqName.asString()).apply {
             dts = tsDeclarations
             exports.statements += ExportModelToJsStatements(staticContext, backendContext.es6mode, { globalNames.declareFreshName(it, it) })
                 .generateModuleExport(
