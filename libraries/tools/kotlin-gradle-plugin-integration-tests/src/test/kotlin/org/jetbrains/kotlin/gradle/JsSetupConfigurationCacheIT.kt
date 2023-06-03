@@ -13,7 +13,7 @@ import org.jetbrains.kotlin.gradle.testbase.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.condition.OS
 
-@OsCondition(supportedOn = [OS.MAC], enabledOnCI = [OS.MAC])
+@OsCondition(supportedOn = [OS.LINUX, OS.MAC, OS.WINDOWS], enabledOnCI = [OS.LINUX, OS.MAC, OS.WINDOWS])
 @NativeGradlePluginTests
 class JsSetupConfigurationCacheIT : KGPBaseTest() {
     @Suppress("DEPRECATION")
