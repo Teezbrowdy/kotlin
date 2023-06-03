@@ -875,7 +875,7 @@ open class RawFirBuilder(
             containingClassIsExpectClass: Boolean
         ): Pair<FirTypeRef, Map<Int, FirFieldSymbol>?> {
             var superTypeCallEntry: KtSuperTypeCallEntry? = null
-            val excessiveSuperTypeCallEntries = mutableListOf<Pair<KtSuperTypeCallEntry, FirTypeRef>>()
+            val allSuperTypeCallEntries = mutableListOf<Pair<KtSuperTypeCallEntry, FirTypeRef>>()
             var delegatedSuperTypeRef: FirTypeRef? = null
             val delegateFieldsMap = mutableMapOf<Int, FirFieldSymbol>()
             superTypeListEntries.forEachIndexed { index, superTypeListEntry ->
@@ -884,10 +884,10 @@ open class RawFirBuilder(
                         container.superTypeRefs += superTypeListEntry.typeReference.toFirOrErrorType()
                     }
                     is KtSuperTypeCallEntry -> {
-                        superTypeCallEntry?.let { excessiveSuperTypeCallEntries.add(it to delegatedSuperTypeRef!!) }
                         delegatedSuperTypeRef = superTypeListEntry.calleeExpression.typeReference.toFirOrErrorType()
                         container.superTypeRefs += delegatedSuperTypeRef!!
                         superTypeCallEntry = superTypeListEntry
+                        allSuperTypeCallEntries.add(superTypeListEntry to delegatedSuperTypeRef!!)
                     }
                     is KtDelegatedSuperTypeEntry -> {
                         val type = superTypeListEntry.typeReference.toFirOrErrorType()
@@ -947,7 +947,7 @@ open class RawFirBuilder(
                     delegatedSelfTypeRef ?: delegatedSuperTypeRef!!,
                     owner = this,
                     containerTypeParameters,
-                    excessiveSuperTypeCallEntries,
+                    allSuperTypeCallEntries,
                     containingClassIsExpectClass,
                     copyConstructedTypeRefWithImplicitSource = true,
                 )
@@ -966,7 +966,7 @@ open class RawFirBuilder(
             delegatedSelfTypeRef: FirTypeRef,
             owner: KtClassOrObject,
             ownerTypeParameters: List<FirTypeParameterRef>,
-            excessiveSuperTypeCallEntries: List<Pair<KtSuperTypeCallEntry, FirTypeRef>>,
+            allSuperTypeCallEntries: List<Pair<KtSuperTypeCallEntry, FirTypeRef>>,
             containingClassIsExpectClass: Boolean,
             copyConstructedTypeRefWithImplicitSource: Boolean,
         ): FirConstructor {
@@ -996,7 +996,15 @@ open class RawFirBuilder(
                     }
                 }
             }
-            val firDelegatedCall = buildDelegatedCall(superTypeCallEntry, delegatedSuperTypeRef!!)
+            val firDelegatedCall = if (allSuperTypeCallEntries.size <= 1 ) {
+                buildDelegatedCall(superTypeCallEntry, delegatedSuperTypeRef!!)
+            } else {
+                buildMultiDelegatedConstructorCall {
+                    delegatedConstructorCalls.addAll(allSuperTypeCallEntries.map { (superTypeCallEntry, delegatedTypeRef) ->
+                        buildDelegatedCall(superTypeCallEntry, delegatedTypeRef)!!
+                    })
+                }
+            }
 
             // See DescriptorUtils#getDefaultConstructorVisibility in core.descriptors
             fun defaultVisibility() = when {
@@ -1027,9 +1035,6 @@ open class RawFirBuilder(
                 this@toFirConstructor?.extractAnnotationsTo(this)
                 this@toFirConstructor?.extractValueParametersTo(this, symbol, ValueParameterDeclaration.PRIMARY_CONSTRUCTOR)
                 this.body = null
-                this.excessiveDelegatedConstructors.addAll(excessiveSuperTypeCallEntries.map { (superTypeCallEntry, delegatedTypeRef) ->
-                    buildDelegatedCall(superTypeCallEntry, delegatedTypeRef)
-                }.filterNotNull())
             }.apply {
                 containingClassForStaticMemberAttr = currentDispatchReceiverType()!!.lookupTag
             }
@@ -1183,7 +1188,7 @@ open class RawFirBuilder(
                                     delegatedEntrySelfType,
                                     owner = ktEnumEntry,
                                     typeParameters,
-                                    excessiveSuperTypeCallEntries = emptyList(),
+                                    allSuperTypeCallEntries = emptyList(),
                                     containingClassIsExpectClass,
                                     copyConstructedTypeRefWithImplicitSource = true,
                                 )

@@ -59,7 +59,6 @@ internal class FirConstructorImpl(
     override var annotations: MutableOrEmptyList<FirAnnotation>,
     override val symbol: FirConstructorSymbol,
     override var delegatedConstructor: FirDelegatedConstructorCall?,
-    override val excessiveDelegatedConstructors: MutableList<FirDelegatedConstructorCall>,
     override var body: FirBlock?,
 ) : FirConstructor() {
     override var controlFlowGraphReference: FirControlFlowGraphReference? = null
@@ -82,7 +81,6 @@ internal class FirConstructorImpl(
         contractDescription.accept(visitor, data)
         annotations.forEach { it.accept(visitor, data) }
         delegatedConstructor?.accept(visitor, data)
-        excessiveDelegatedConstructors.forEach { it.accept(visitor, data) }
         body?.accept(visitor, data)
     }
 
@@ -97,7 +95,6 @@ internal class FirConstructorImpl(
         transformContractDescription(transformer, data)
         transformAnnotations(transformer, data)
         transformDelegatedConstructor(transformer, data)
-        transformExcessiveDelegatedConstructors(transformer, data)
         transformBody(transformer, data)
         return this
     }
@@ -139,11 +136,6 @@ internal class FirConstructorImpl(
 
     override fun <D> transformDelegatedConstructor(transformer: FirTransformer<D>, data: D): FirConstructorImpl {
         delegatedConstructor = delegatedConstructor?.transform(transformer, data)
-        return this
-    }
-
-    override fun <D> transformExcessiveDelegatedConstructors(transformer: FirTransformer<D>, data: D): FirConstructorImpl {
-        excessiveDelegatedConstructors.transformInplace(transformer, data)
         return this
     }
 
@@ -191,11 +183,6 @@ internal class FirConstructorImpl(
 
     override fun replaceDelegatedConstructor(newDelegatedConstructor: FirDelegatedConstructorCall?) {
         delegatedConstructor = newDelegatedConstructor
-    }
-
-    override fun replaceExcessiveDelegatedConstructors(newExcessiveDelegatedConstructors: List<FirDelegatedConstructorCall>) {
-        excessiveDelegatedConstructors.clear()
-        excessiveDelegatedConstructors.addAll(newExcessiveDelegatedConstructors)
     }
 
     override fun replaceBody(newBody: FirBlock?) {

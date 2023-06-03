@@ -46,7 +46,6 @@ class FirJavaConstructor @FirImplementationDetail constructor(
     override val receiverParameter: FirReceiverParameter? get() = null
     override var deprecationsProvider: DeprecationsProvider = UnresolvedDeprecationProvider
     override val contractDescription: FirContractDescription get() = FirEmptyContractDescription
-    override val excessiveDelegatedConstructors = emptyList<FirDelegatedConstructorCall>()
 
     init {
         symbol.bind(this)
@@ -123,10 +122,6 @@ class FirJavaConstructor @FirImplementationDetail constructor(
         return this
     }
 
-    override fun <D> transformExcessiveDelegatedConstructors(transformer: FirTransformer<D>, data: D): FirJavaConstructor {
-        return this
-    }
-
     override fun <D> transformBody(transformer: FirTransformer<D>, data: D): FirConstructor {
         return this
     }
@@ -149,10 +144,6 @@ class FirJavaConstructor @FirImplementationDetail constructor(
 
     override fun replaceDelegatedConstructor(newDelegatedConstructor: FirDelegatedConstructorCall?) {
         error("Delegated constructor cannot be replaced for FirJavaConstructor")
-    }
-
-    override fun replaceExcessiveDelegatedConstructors(newExcessiveDelegatedConstructors: List<FirDelegatedConstructorCall>) {
-        error("Excessive delegated constructors cannot be replaced for FirJavaConstructor")
     }
 
     override fun replaceReceiverParameter(newReceiverParameter: FirReceiverParameter?) {}
