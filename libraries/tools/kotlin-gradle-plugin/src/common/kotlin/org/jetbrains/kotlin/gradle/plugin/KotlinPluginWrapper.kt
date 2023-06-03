@@ -68,10 +68,10 @@ abstract class DefaultKotlinBasePlugin : KotlinBasePlugin {
     override fun apply(project: Project) {
         checkGradleCompatibility()
 
+        project.registerDefaultVariantImplementations()
         KotlinBuildStatsService.getOrCreateInstance(project)?.apply {
             report(StringMetrics.KOTLIN_COMPILER_VERSION, pluginVersion)
         }
-        project.registerDefaultVariantImplementations()
         BuildFlowService.registerIfAbsent(project)
 
         project.gradle.projectsEvaluated {
